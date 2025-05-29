@@ -1,0 +1,84 @@
+.sidebar {
+  height: 100vh;
+  width: 70px;
+  background-color: #1a1a1a;
+  position: fixed;
+  left: 0;
+  top: 0;
+  transition: width 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: visible; /* Allow content to overflow for titles */
+}
+
+.sidebar-nav {
+  margin-top: 60px;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu-item {
+  margin-bottom: 10px;
+  position: relative;
+  overflow: visible; /* Allow title to be visible outside the menu item */
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 12px 15px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  position: relative; /* For positioning the title */
+}
+
+.sidebar-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-icon {
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-title {
+  position: absolute;
+  left: 60px; /* Position title to the right of the icon */
+  background: #333;
+  padding: 5px 10px;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.sidebar-title.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Show title on hover */
+.sidebar-menu-item:hover .sidebar-title {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Additional hover effect for the menu item */
+.sidebar-menu-item:hover {
+  z-index: 10; /* Ensure hovered item appears above others */
+}
