@@ -1,6 +1,9 @@
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './Root';
+import Bills from './Bills';
+import Board from './Board';
+import Settings from './Setting';
 
 
 
@@ -13,10 +16,16 @@ function App() {
       element: <Root />,
       children: [
         {
-          path: '/bills'
+          path: '/bills',
+          element: <Bills />
         },
         {
-          path: '/settings'
+          path: '/settings',
+          element: <Settings />
+        },
+        {
+          path: '/',
+          element: <Board />
         }
       ]
     }

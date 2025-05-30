@@ -1,0 +1,222 @@
+[
+  {
+    "nr_factura": "INV001",
+    "tip_factura": "iesire",
+    "data_emiteri": "2025-05-01",
+    "data_scadenta": "2025-05-15",
+    "valoare_fara_tva": 5000,
+    "valoare_tva": 950,
+    "valoare_totala": 5950,
+    "platit": false,
+    "client": "Tech Solutions SRL"
+  },
+  {
+    "nr_factura": "INV002",
+    "tip_factura": "intrare",
+    "data_emiteri": "2025-04-22",
+    "data_scadenta": "2025-05-06",
+    "valoare_fara_tva": 2400,
+    "valoare_tva": 456,
+    "valoare_totala": 2856,
+    "platit": true,
+    "client": "Office Supplies SRL"
+  },
+  {
+    "nr_factura": "INV003",
+    "tip_factura": "iesire",
+    "data_emiteri": "2025-04-15",
+    "data_scadenta": "2025-05-01",
+    "valoare_fara_tva": 3200,
+    "valoare_tva": 608,
+    "valoare_totala": 3808,
+    "platit": false,
+    "client": "EcoDistrib SA"
+  },
+  {
+    "nr_factura": "INV004",
+    "tip_factura": "intrare",
+    "data_emiteri": "2025-03-10",
+    "data_scadenta": "2025-04-10",
+    "valoare_fara_tva": 1700,
+    "valoare_tva": 323,
+    "valoare_totala": 2023,
+    "platit": true,
+    "client": "IT Hardware SRL"
+  },
+  {
+    "nr_factura": "INV005",
+    "tip_factura": "iesire",
+    "data_emiteri": "2025-05-05",
+    "data_scadenta": "2025-05-20",
+    "valoare_fara_tva": 6100,
+    "valoare_tva": 1159,
+    "valoare_totala": 7259,
+    "platit": false,
+    "client": "Constructiva Build SRL"
+  },
+  {
+    "nr_factura": "INV006",
+    "tip_factura": "intrare",
+    "data_emiteri": "2025-04-20",
+    "data_scadenta": "2025-05-05",
+    "valoare_fara_tva": 1500,
+    "valoare_tva": 285,
+    "valoare_totala": 1785,
+    "platit": true,
+    "client": "Clean&Safe SRL"
+  },
+  {
+    "nr_factura": "INV007",
+    "tip_factura": "iesire",
+    "data_emiteri": "2025-03-15",
+    "data_scadenta": "2025-04-15",
+    "valoare_fara_tva": 2100,
+    "valoare_tva": 399,
+    "valoare_totala": 2499,
+    "platit": false,
+    "client": "Nordic Distribution SRL"
+  },
+  {
+    "nr_factura": "INV008",
+    "tip_factura": "intrare",
+    "data_emiteri": "2025-05-10",
+    "data_scadenta": "2025-05-25",
+    "valoare_fara_tva": 3000,
+    "valoare_tva": 570,
+    "valoare_totala": 3570,
+    "platit": false,
+    "client": "Global Print SRL"
+  },
+  {
+    "nr_factura": "INV009",
+    "tip_factura": "iesire",
+    "data_emiteri": "2025-04-01",
+    "data_scadenta": "2025-04-30",
+    "valoare_fara_tva": 3600,
+    "valoare_tva": 684,
+    "valoare_totala": 4284,
+    "platit": true,
+    "client": "Alpha Business SRL"
+  },
+  {
+    "nr_factura": "INV010",
+    "tip_factura": "iesire",
+    "data_emiteri": "2025-05-15",
+    "data_scadenta": "2025-05-30",
+    "valoare_fara_tva": 5400,
+    "valoare_tva": 1026,
+    "valoare_totala": 6426,
+    "platit": false,
+    "client": "NextGen Solutions SRL"
+  },
+  {
+    "nr_factura": "INV011",
+    "tip_factura": "intrare",
+    "data_emiteri": "2025-03-05",
+    "data_scadenta": "2025-04-05",
+    "valoare_fara_tva": 4000,
+    "valoare_tva": 760,
+    "valoare_totala": 4760,
+    "platit": false,
+    "client": "Digital Trade SRL"
+  },
+  {
+    "nr_factura": "INV012",
+    "tip_factura": "iesire",
+    "data_emiteri": "2025-04-05",
+    "data_scadenta": "2025-05-05",
+    "valoare_fara_tva": 2750,
+    "valoare_tva": 522,
+    "valoare_totala": 3272,
+    "platit": true,
+    "client": "Retail Point SRL"
+  },
+  {
+    "nr_factura": "INV013",
+    "tip_factura": "intrare",
+    "data_emiteri": "2025-04-18",
+    "data_scadenta": "2025-05-18",
+    "valoare_fara_tva": 2100,
+    "valoare_tva": 399,
+    "valoare_totala": 2499,
+    "platit": true,
+    "client": "AutoDepo SRL"
+  },
+  {
+    "nr_factura": "INV014",
+    "tip_factura": "iesire",
+    "data_emiteri": "2025-02-28",
+    "data_scadenta": "2025-03-30",
+    "valoare_fara_tva": 1850,
+    "valoare_tva": 352,
+    "valoare_totala": 2202,
+    "platit": false,
+    "client": "PromoWorld SRL"
+  },
+  {
+    "nr_factura": "INV015",
+    "tip_factura": "intrare",
+    "data_emiteri": "2025-03-28",
+    "data_scadenta": "2025-04-28",
+    "valoare_fara_tva": 1300,
+    "valoare_tva": 247,
+    "valoare_totala": 1547,
+    "platit": false,
+    "client": "Creative Agency SRL"
+  },
+  {
+    "nr_factura": "INV016",
+    "tip_factura": "iesire",
+    "data_emiteri": "2025-05-18",
+    "data_scadenta": "2025-06-02",
+    "valoare_fara_tva": 6600,
+    "valoare_tva": 1254,
+    "valoare_totala": 7854,
+    "platit": false,
+    "client": "Global Vision SRL"
+  },
+  {
+    "nr_factura": "INV017",
+    "tip_factura": "intrare",
+    "data_emiteri": "2025-02-12",
+    "data_scadenta": "2025-03-12",
+    "valoare_fara_tva": 2100,
+    "valoare_tva": 399,
+    "valoare_totala": 2499,
+    "platit": true,
+    "client": "TransPack SRL"
+  },
+  {
+    "nr_factura": "INV018",
+    "tip_factura": "iesire",
+    "data_emiteri": "2025-01-25",
+    "data_scadenta": "2025-02-24",
+    "valoare_fara_tva": 3000,
+    "valoare_tva": 570,
+    "valoare_totala": 3570,
+    "platit": false,
+    "client": "BigCity Media SRL"
+  },
+  {
+    "nr_factura": "INV019",
+    "tip_factura": "intrare",
+    "data_emiteri": "2025-04-07",
+    "data_scadenta": "2025-05-07",
+    "valoare_fara_tva": 2750,
+    "valoare_tva": 522,
+    "valoare_totala": 3272,
+    "platit": true,
+    "client": "Green Energy SRL"
+  },
+  {
+    "nr_factura": "INV020",
+    "tip_factura": "iesire",
+    "data_emiteri": "2025-05-20",
+    "data_scadenta": "2025-06-04",
+    "valoare_fara_tva": 5800,
+    "valoare_tva": 1102,
+    "valoare_totala": 6902,
+    "platit": false,
+    "client": "Softvision Tech SRL"
+  }
+]
