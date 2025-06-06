@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import facturi from '../data.json'
+import './Bills.css'
 
 export default function Bills() {
 
@@ -72,8 +73,18 @@ export default function Bills() {
         <>
             {/* <div>{data}</div> */}
             <div>hej</div>
-
+            
+            <div className="top-clients-container">
+                <h2>Top 10 Clients</h2>
+                <ul className="top-clients-list">
+                    {top10Clienti.map((client, index) => (
+                        <li key={index} className="client-item">
+                            <span className="client-name">{client[0]}</span>
+                            <span className="client-value">{client[1].toFixed(2)}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </>
-
     )
 }
