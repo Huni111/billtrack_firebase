@@ -164,7 +164,10 @@ const Board = () => {
                             data={Object.entries(facturiIntrareLejart.reduce((acc, f) => {
                                 acc[f.client] = (acc[f.client] || 0) + f.valoare_totala;
                                 return acc;
-                            }, {})).map(([name, value]) => ({ name, value }))}
+                            }, {}))
+                                .map(([name, value]) => ({ name, value }))
+                                .sort((a, b) => b.value - a.value)
+                            }
                             layout="vertical"
                             margin={{ top: 16, right: 24, left: 0, bottom: 8 }}
                         >
@@ -183,7 +186,10 @@ const Board = () => {
                             data={Object.entries(facturiIesireLejart.reduce((acc, f) => {
                                 acc[f.client] = (acc[f.client] || 0) + f.valoare_totala;
                                 return acc;
-                            }, {})).map(([name, value]) => ({ name, value }))}
+                            }, {}))
+                                .map(([name, value]) => ({ name, value }))
+                                .sort((a, b) => b.value - a.value)
+                            }
                             layout="vertical"
                             margin={{ top: 16, right: 24, left: 0, bottom: 8 }}
                         >
