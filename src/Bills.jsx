@@ -52,11 +52,18 @@ export default function Bills() {
 
 
 
-    //  Lejárt kimenő számlák (nem fizetett)
+    //  Lejárt kimenő számlák (nu sunt plătite)
     const azi = new Date();
 
     const facturiIesireLejart = facturi.filter(f =>
         f.tip_factura === "iesire" &&
+        f.platit === false &&
+        new Date(f.data_scadenta) < azi
+    );
+
+    //  Lejárt facturi de intrare (nu sunt plătite)
+    const facturiIntrareLejart = facturi.filter(f =>
+        f.tip_factura === "intrare" &&
         f.platit === false &&
         new Date(f.data_scadenta) < azi
     );
@@ -68,6 +75,20 @@ export default function Bills() {
         console.log("Unpaid overdue outgoing invoices:", facturiIesireLejart);
 
     }, [])
+
+    // Modal state
+    const [selectedBill, setSelectedBill] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+
+    const handleBillClick = (factura) => {
+        setSelectedBill(factura);
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        setSelectedBill(null);
+    };
 
     return (
         <>
@@ -92,7 +113,23 @@ export default function Bills() {
                             <li className="no-overdue">Nicio factura lejartă</li>
                         ) : (
                             facturiIesireLejart.map((factura, idx) => (
-                                <li key={idx} className="overdue-bill-item">
+                                <li key={idx} className="overdue-bill-item" onClick={() => handleBillClick(factura)} style={{cursor: 'pointer'}}>
+                                    <span className="client-name">{factura.client}</span>
+                                    <span className="bill-value">{factura.valoare_totala.toFixed(2)}</span>
+                                    <span className="bill-due-date">Scadentă: {factura.data_scadenta}</span>
+                                </li>
+                            ))
+                        )}
+                    </ul>
+                </div>
+                <div className="overdue-bills-container card-list">
+                    <h2>Facturi Intrare Lejart</h2>
+                    <ul className="overdue-bills-list">
+                        {facturiIntrareLejart.length === 0 ? (
+                            <li className="no-overdue">Nicio factura lejartă</li>
+                        ) : (
+                            facturiIntrareLejart.map((factura, idx) => (
+                                <li key={idx} className="overdue-bill-item" onClick={() => handleBillClick(factura)} style={{cursor: 'pointer'}}>
                                     <span className="client-name">{factura.client}</span>
                                     <span className="bill-value">{factura.valoare_totala.toFixed(2)}</span>
                                     <span className="bill-due-date">Scadentă: {factura.data_scadenta}</span>
@@ -102,6 +139,22 @@ export default function Bills() {
                     </ul>
                 </div>
             </div>
+
+            {showModal && selectedBill && (
+                <div className="modal-overlay" onClick={closeModal}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <button className="modal-close" onClick={closeModal}>&times;</button>
+                        <h3>Detalii Factură</h3>
+                        <div><strong>{selectedBill.tip_factura === 'iesire' ? 'Client' : 'Furnizor'}:</strong> {selectedBill.client}</div>
+                        <div><strong>Valoare totală:</strong> {selectedBill.valoare_totala.toFixed(2)}</div>
+                        <div><strong>Data emiterii:</strong> {selectedBill.data_emiteri}</div>
+                        <div><strong>Data scadentă:</strong> {selectedBill.data_scadenta}</div>
+                        <div><strong>Plătit:</strong> {selectedBill.platit ? 'Da' : 'Nu'}</div>
+                        <div><strong>Serie/Număr:</strong> {selectedBill.serie || ''} {selectedBill.numar || ''}</div>
+                        {/* Add more fields as needed */}
+                    </div>
+                </div>
+            )}
         </>
     )
 }
