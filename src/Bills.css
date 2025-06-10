@@ -1,14 +1,25 @@
 /* Bills.css - Styling for the Bills component */
 
-.top-clients-container {
+.bills-lists-wrapper {
+  display: flex;
+  gap: 24px;
+  justify-content: flex-start;
+}
+
+.top-clients-container,
+.overdue-bills-container {
   background-color: #f8f9fa;
   border-radius: 8px;
   padding: 20px;
   margin: 20px 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 320px;
+  max-width: 350px;
+  flex: 1 1 320px;
 }
 
-.top-clients-container h2 {
+.top-clients-container h2,
+.overdue-bills-container h2 {
   color: #2c3e50;
   margin-bottom: 15px;
   font-size: 1.5rem;
@@ -16,31 +27,60 @@
   padding-bottom: 8px;
 }
 
-.top-clients-list {
+.top-clients-list,
+.overdue-bills-list {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-.client-item {
+.client-item,
+.overdue-bill-item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 12px 10px;
   border-bottom: 1px solid #e0e0e0;
   transition: background-color 0.2s ease;
 }
 
-.client-item:hover {
+.overdue-bill-item {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.no-overdue {
+  color: #888;
+  text-align: center;
+  padding: 16px 0;
+}
+
+.client-item:hover,
+.overdue-bill-item:hover {
   background-color: #e9f7fe;
 }
 
-.client-item:last-child {
+.client-item:last-child,
+.overdue-bill-item:last-child {
   border-bottom: none;
 }
 
 .client-name {
   font-weight: 500;
   color: #34495e;
+}
+
+.client-value,
+.bill-value {
+  font-weight: 600;
+  color: #16a085;
+}
+
+.bill-due-date {
+  font-size: 0.95em;
+  color: #b94a48;
+  margin-left: 4px;
 }
 
 .client-value {

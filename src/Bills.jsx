@@ -73,17 +73,34 @@ export default function Bills() {
         <>
             {/* <div>{data}</div> */}
             <div>hej</div>
-            
-            <div className="top-clients-container">
-                <h2>Top 10 Clients</h2>
-                <ul className="top-clients-list">
-                    {top10Clienti.map((client, index) => (
-                        <li key={index} className="client-item">
-                            <span className="client-name">{client[0]}</span>
-                            <span className="client-value">{client[1].toFixed(2)}</span>
-                        </li>
-                    ))}
-                </ul>
+            <div className="bills-lists-wrapper">
+                <div className="top-clients-container card-list">
+                    <h2>Top 10 Clients</h2>
+                    <ul className="top-clients-list">
+                        {top10Clienti.map((client, index) => (
+                            <li key={index} className="client-item">
+                                <span className="client-name">{client[0]}</span>
+                                <span className="client-value">{client[1].toFixed(2)}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="overdue-bills-container card-list">
+                    <h2>Facturi Iesire Lejart</h2>
+                    <ul className="overdue-bills-list">
+                        {facturiIesireLejart.length === 0 ? (
+                            <li className="no-overdue">Nicio factura lejartă</li>
+                        ) : (
+                            facturiIesireLejart.map((factura, idx) => (
+                                <li key={idx} className="overdue-bill-item">
+                                    <span className="client-name">{factura.client}</span>
+                                    <span className="bill-value">{factura.valoare_totala.toFixed(2)}</span>
+                                    <span className="bill-due-date">Scadentă: {factura.data_scadenta}</span>
+                                </li>
+                            ))
+                        )}
+                    </ul>
+                </div>
             </div>
         </>
     )
