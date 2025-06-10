@@ -96,6 +96,83 @@
   color: gold;
 }
 
+/* Paginated bills table styles */
+.all-bills-section {
+  margin: 36px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.paginated-bills-table-wrapper {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0 0 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 320px;
+  max-width: 100%;
+}
+
+.paginated-bills-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.paginated-bills-table th,
+.paginated-bills-table td {
+  padding: 10px 8px;
+  text-align: left;
+}
+
+.paginated-bills-table th {
+  background: #e9f7fe;
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  font-weight: 600;
+}
+
+.paginated-bill-row {
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s;
+}
+
+.paginated-bill-row:hover {
+  background-color: #e9f7fe;
+}
+
+.paginated-bills-table tr:last-child td {
+  border-bottom: none;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.pagination-controls button {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 14px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.pagination-controls button:disabled {
+  background: #b2bec3;
+  cursor: not-allowed;
+}
+.pagination-controls span {
+  font-size: 1rem;
+  color: #34495e;
+}
+
 /* Modal styles */
 .modal-overlay {
   position: fixed;
