@@ -263,6 +263,24 @@
   box-shadow: 0 2px 8px rgba(22,160,133,0.13);
 }
 
+.edit-bill-btn {
+  background: #f39c12;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 7px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(243,156,18,0.08);
+  transition: background 0.18s, box-shadow 0.18s;
+  margin: 0 2px;
+}
+.edit-bill-btn:hover {
+  background: #e67e22;
+  box-shadow: 0 2px 8px rgba(243,156,18,0.13);
+}
+
 /* Modal styles */
 .modal-overlay {
   position: fixed;

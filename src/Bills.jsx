@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import facturiData from '../data.json'
 import './Bills.css'
 import AddBillModal from './AddBillModal'
+import EditBillModal from './EditBillModal'
 
 export default function Bills() {
     // Local state for bills (so we can add new ones)
@@ -83,6 +84,10 @@ export default function Bills() {
     const [selectedBill, setSelectedBill] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
+    // Modal state for editing
+    const [editModalOpen, setEditModalOpen] = useState(false);
+    const [editBill, setEditBill] = useState(null);
+
     const handleBillClick = (factura) => {
         setSelectedBill(factura);
         setShowModal(true);
@@ -91,6 +96,17 @@ export default function Bills() {
     const closeModal = () => {
         setShowModal(false);
         setSelectedBill(null);
+    };
+
+    const handleEditClick = (bill) => {
+        setEditBill(bill);
+        setEditModalOpen(true);
+    };
+
+    const handleEditSave = (updatedBill) => {
+        setBills(bills => bills.map(b => b === editBill ? updatedBill : b));
+        setEditModalOpen(false);
+        setEditBill(null);
     };
 
     return (
@@ -170,15 +186,22 @@ export default function Bills() {
                 <PaginatedBillsTable
                     bills={bills}
                     onBillClick={handleBillClick}
+                    onEditClick={handleEditClick}
                     rowsPerPage={10}
                 />
             </div>
+        <EditBillModal
+                open={editModalOpen}
+                bill={editBill}
+                onClose={() => { setEditModalOpen(false); setEditBill(null); }}
+                onSave={handleEditSave}
+            />
         </>
     )
 }
 
 // Paginated table component
-function PaginatedBillsTable({ bills, onBillClick, rowsPerPage }) {
+function PaginatedBillsTable({ bills, onBillClick, onEditClick, rowsPerPage }) {
     const [page, setPage] = React.useState(1);
     const totalPages = Math.ceil(bills.length / rowsPerPage);
     const startIdx = (page - 1) * rowsPerPage;
@@ -194,16 +217,18 @@ function PaginatedBillsTable({ bills, onBillClick, rowsPerPage }) {
                         <th>Valoare</th>
                         <th>Scadentă</th>
                         <th>Plătit</th>
+                        <th>Editează</th>
                     </tr>
                 </thead>
                 <tbody>
                     {pageBills.map((bill, idx) => (
-                        <tr key={startIdx + idx} className="paginated-bill-row" onClick={() => onBillClick(bill)} style={{cursor: 'pointer'}}>
-                            <td>{bill.tip_factura === 'iesire' ? 'Iesire' : 'Intrare'}</td>
-                            <td>{bill.client}</td>
-                            <td>{bill.valoare_totala.toFixed(2)}</td>
-                            <td>{bill.data_scadenta}</td>
-                            <td>{bill.platit ? 'Da' : 'Nu'}</td>
+                        <tr key={startIdx + idx} className="paginated-bill-row">
+                            <td onClick={() => onBillClick(bill)} style={{cursor: 'pointer'}}>{bill.tip_factura === 'iesire' ? 'Iesire' : 'Intrare'}</td>
+                            <td onClick={() => onBillClick(bill)} style={{cursor: 'pointer'}}>{bill.client}</td>
+                            <td onClick={() => onBillClick(bill)} style={{cursor: 'pointer'}}>{bill.valoare_totala.toFixed(2)}</td>
+                            <td onClick={() => onBillClick(bill)} style={{cursor: 'pointer'}}>{bill.data_scadenta}</td>
+                            <td onClick={() => onBillClick(bill)} style={{cursor: 'pointer'}}>{bill.platit ? 'Da' : 'Nu'}</td>
+                            <td><button className="edit-bill-btn" onClick={e => { e.stopPropagation(); onEditClick(bill); }}>Editează</button></td>
                         </tr>
                     ))}
                 </tbody>
