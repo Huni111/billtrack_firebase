@@ -325,3 +325,8 @@
 .modal-close:hover {
   color: #c0392b;
 }
+
+.inputs {
+  padding: 0.5rem;
+  border-radius: 5px;
+}

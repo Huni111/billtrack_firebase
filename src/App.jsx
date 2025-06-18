@@ -4,6 +4,7 @@ import Root from './Root';
 import Bills from './Bills';
 import Board from './Board';
 import Settings from './Setting';
+import Nou from './Nou'
 
 
 
@@ -26,6 +27,10 @@ function App() {
         {
           path: '/',
           element: <Board />
+        },
+        {
+          path: '/nou',
+          element: <Nou />
         }
       ]
     }
