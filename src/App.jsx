@@ -5,6 +5,7 @@ import Bills from './Bills';
 import Board from './Board';
 import Settings from './Setting';
 import Nou from './Nou'
+import { AuthProvider } from "./AuthContext";
 
 
 
@@ -38,9 +39,11 @@ function App() {
 
   return (
     <>
+    <AuthProvider>
       <RouterProvider router={router}>
         {router}
       </RouterProvider>
+      </AuthProvider>
     </>
   );
 }
