@@ -96,12 +96,12 @@ export default function Settings() {
                     <div>
                         <label>Email</label>
                         <input 
+                            className="inputs"
                             name="email" 
                             type="email"
                             value={loginForm.email} 
                             onChange={handleLoginChange} 
                             required 
-                            className="inputs"
                         />
                     </div>
                     <div>

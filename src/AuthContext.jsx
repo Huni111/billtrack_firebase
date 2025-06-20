@@ -9,19 +9,19 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
 
     // Check if user is logged in on mount
-    useEffect(() => {
-        const checkUser = async () => {
-            try {
-                const userData = await account.get();
-                setUser(userData);
-            } catch {
-                setUser(null);
-            } finally {
-                setLoading(false);
-            }
-        };
-        checkUser();
-    }, []);
+    // useEffect(() => {
+    //     const checkUser = async () => {
+    //         try {
+    //             const userData = await account.get();
+    //             setUser(userData);
+    //         } catch {
+    //             setUser(null);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
+    //     checkUser();
+    // }, []);
 
     // Login function
     const login = async (email, password) => {
