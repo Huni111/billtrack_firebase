@@ -59,15 +59,15 @@ export default function AddBillModal({ open, onClose, onAdd }) {
                     </div>
                     <div>
                         <label>{form.tip_factura === "iesire" ? "Client" : "Furnizor"}: </label>
-                        <input name="client" value={form.client} onChange={handleChange} required />
+                        <input className="inputs" name="client" value={form.client} onChange={handleChange} required />
                     </div>
                     <div>
                         <label>Valoare totală: </label>
-                        <input name="valoare_totala" type="number" step="0.01" value={form.valoare_totala} onChange={handleChange} required />
+                        <input className="inputs" name="valoare_totala" type="number" step="0.01" value={form.valoare_totala} onChange={handleChange} required />
                     </div>
                     <div>
                         <label>Data emiterii: </label>
-                        <input name="data_emiteri" type="date" value={form.data_emiteri} onChange={handleChange} required />
+                        <input className="inputs" name="data_emiteri" type="date" value={form.data_emiteri} onChange={handleChange} required />
                     </div>
                     <div>
                         <label>Data scadentă: </label>
@@ -79,11 +79,11 @@ export default function AddBillModal({ open, onClose, onAdd }) {
                     </div>
                     <div>
                         <label>Serie: </label>
-                        <input name="serie" value={form.serie} onChange={handleChange} />
+                        <input className="inputs" name="serie" value={form.serie} onChange={handleChange} />
                     </div>
                     <div>
                         <label>Număr: </label>
-                        <input name="numar" value={form.numar} onChange={handleChange} />
+                        <input className="inputs" name="numar" value={form.numar} onChange={handleChange} />
                     </div>
                     <div style={{marginTop: 16}}>
                         <button type="submit" className="add-bill-save-btn">Salvează</button>

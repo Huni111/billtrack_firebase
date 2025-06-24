@@ -21,11 +21,11 @@ export function AuthProvider({ children }) {
     //         }
     //     };
     //     checkUser();
-    // }, []);
+    // }, []); hogy ne adjon errort a consolba
 
     // Login function
     const login = async (email, password) => {
-        await account.createEmailSession(email, password);
+        await account.createEmailPasswordSession(email, password);
         const userData = await account.get();
         setUser(userData);
     };

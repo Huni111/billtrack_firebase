@@ -1,21 +1,44 @@
 import React, { useState } from "react";
 import "./Bills.css";
+import { useAuth } from "./AuthContext"; // adjust the path if needed
 
 export default function Settings() {
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [loginForm, setLoginForm] = useState({ username: "", password: "" });
-    const [userForm, setUserForm] = useState({ username: "", password: "", confirm: "" });
+    const { user, login, logout, register } = useAuth();
+    const [loginForm, setLoginForm] = useState({ email: "", password: "" });
+    const [userForm, setUserForm] = useState({ email: "", password: "", confirm: "" });
     const [loginError, setLoginError] = useState("");
     const [userMsg, setUserMsg] = useState("");
 
+
+
     // Dummy login: username: admin, password: admin
-    const handleLogin = e => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if (loginForm.username === "admin" && loginForm.password === "admin") {
-            setLoggedIn(true);
-            setLoginError("");
-        } else {
-            setLoginError("Nume sau parolă greșită!");
+        setLoginError("");
+        try {
+            await login(loginForm.email, loginForm.password);
+        } catch (error) {
+            setLoginError("Autentificare eșuată: " + error.message);
+        }
+    };
+
+    const handleCreateUser = async (e) => {
+        e.preventDefault();
+        setUserMsg("");
+        if (!userForm.username || !userForm.password) {
+            setUserMsg("Toate câmpurile sunt obligatorii!");
+            return;
+        }
+        if (userForm.password !== userForm.confirm) {
+            setUserMsg("Parolele nu coincid!");
+            return;
+        }
+        try {
+            await register(userForm.email, userForm.password);
+            setUserMsg("Utilizator creat cu succes!");
+            setUserForm({ email: "", password: "", confirm: "" });
+        } catch (error) {
+            setUserMsg("Eroare la creare: " + error.message);
         }
     };
 
@@ -29,57 +52,49 @@ export default function Settings() {
         setUserForm(f => ({ ...f, [name]: value }));
     };
 
-    const handleCreateUser = e => {
-        e.preventDefault();
-        if (!userForm.username || !userForm.password) {
-            setUserMsg("Toate câmpurile sunt obligatorii!");
-            return;
-        }
-        if (userForm.password !== userForm.confirm) {
-            setUserMsg("Parolele nu coincid!");
-            return;
-        }
-        setUserMsg("Utilizator creat cu succes!");
-        setUserForm({ username: "", password: "", confirm: "" });
+    const handleLogout = async () => {
+        await logout();
     };
 
     return (
         <div style={{ maxWidth: 400, margin: "40px auto" }}>
-            {!loggedIn ? (
+            {!user ? (
                 <form className="add-bill-form" onSubmit={handleLogin}>
-                    <h2 style={{marginBottom: 10}}>Autentificare</h2>
+                    <h2 style={{ marginBottom: 10 }}>Autentificare</h2>
                     <div>
-                        <label>Utilizator</label>
-                        <input name="username" value={loginForm.username} onChange={handleLoginChange} required />
+                        <label>E-mail</label>
+                        <input className='inputs' name="email" type="email"
+                            placeholder="Email" value={loginForm.email} onChange={handleLoginChange} required />
                     </div>
                     <div>
                         <label>Parolă</label>
-                        <input name="password" type="password" value={loginForm.password} onChange={handleLoginChange} required />
+                        <input className='inputs' placeholder="password" name="password" type="password" value={loginForm.password} onChange={handleLoginChange} required />
                     </div>
-                    <div style={{marginTop: 16}}>
+                    <div style={{ marginTop: 16 }}>
                         <button className="add-bill-save-btn" type="submit">Login</button>
                     </div>
-                    {loginError && <div style={{color: '#e74c3c', marginTop: 8}}>{loginError}</div>}
+                    {loginError && <div style={{ color: '#e74c3c', marginTop: 8 }}>{loginError}</div>}
                 </form>
             ) : (
                 <form className="add-bill-form" onSubmit={handleCreateUser}>
-                    <h2 style={{marginBottom: 10}}>Creează Utilizator Nou</h2>
+                    <h2 style={{ marginBottom: 10 }}>Creează Utilizator Nou</h2>
                     <div>
-                        <label>Utilizator</label>
-                        <input name="username" value={userForm.username} onChange={handleUserChange} required />
+                        <label>Email</label>
+                        <input className='inputs'  type="email" name="username" value={userForm.username} onChange={handleUserChange} required />
                     </div>
                     <div>
                         <label>Parolă</label>
-                        <input name="password" type="password" value={userForm.password} onChange={handleUserChange} required />
+                        <input className='inputs' name="password" type="password" value={userForm.password} onChange={handleUserChange} required />
                     </div>
                     <div>
                         <label>Confirmă Parola</label>
-                        <input name="confirm" type="password" value={userForm.confirm} onChange={handleUserChange} required />
+                        <input className='inputs' name="confirm" type="password" value={userForm.confirm} onChange={handleUserChange} required />
                     </div>
-                    <div style={{marginTop: 16}}>
+                    <div style={{ marginTop: 16 }}>
                         <button className="add-bill-save-btn" type="submit">Creează</button>
+                        <button className="add-bill-save-btn" type="buton" onClick={handleLogout}>Logout</button>
                     </div>
-                    {userMsg && <div style={{color: userMsg.includes('succes') ? '#16a085' : '#e74c3c', marginTop: 8}}>{userMsg}</div>}
+                    {userMsg && <div style={{ color: userMsg.includes('succes') ? '#16a085' : '#e74c3c', marginTop: 8 }}>{userMsg}</div>}
                 </form>
             )}
         </div>
