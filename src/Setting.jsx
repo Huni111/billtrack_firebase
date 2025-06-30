@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Bills.css";
 import { useAuth } from "./AuthContext"; // adjust the path if needed
 
@@ -9,6 +9,7 @@ export default function Settings() {
     const [loginError, setLoginError] = useState("");
     const [userMsg, setUserMsg] = useState("");
 
+    
 
 
     // Dummy login: username: admin, password: admin
@@ -63,7 +64,7 @@ export default function Settings() {
                     <h2 style={{ marginBottom: 10 }}>Autentificare</h2>
                     <div>
                         <label>E-mail</label>
-                        <input className='inputs' name="email" type="email"
+                        <input className='inputs' name="email" type="email" value={userForm.email ?? ""}
                             placeholder="Email" value={loginForm.email} onChange={handleLoginChange} required />
                     </div>
                     <div>

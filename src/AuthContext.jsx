@@ -8,23 +8,27 @@ export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Check if user is logged in on mount
-    // useEffect(() => {
-    //     const checkUser = async () => {
-    //         try {
-    //             const userData = await account.get();
-    //             setUser(userData);
-    //         } catch {
-    //             setUser(null);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-    //     checkUser();
-    // }, []); hogy ne adjon errort a consolba
+
+useEffect(() => {
+        const checkSession = async () => {
+            try {
+                const session = await account.getSession("current");
+                if (session) {
+                    const userData = await account.get();
+                    setUser(userData);
+                }
+            } catch (error) {
+                // No active session or error
+                setUser(null);
+            } 
+        };
+        checkSession();
+    }, []);
+
 
     // Login function
     const login = async (email, password) => {
+        await account.deleteSession("current");
         await account.createEmailPasswordSession(email, password);
         const userData = await account.get();
         setUser(userData);

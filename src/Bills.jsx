@@ -3,15 +3,40 @@ import facturiData from '../data.json'
 import './Bills.css'
 import AddBillModal from './AddBillModal'
 import EditBillModal from './EditBillModal'
+import { useAuth } from "./AuthContext"
 
 export default function Bills() {
     // Local state for bills (so we can add new ones)
     const [bills, setBills] = React.useState(facturiData);
     const [addModalOpen, setAddModalOpen] = React.useState(false);
+    const {user} = useAuth()
 
     const today = new Date();
     const currentYear = today.getFullYear();
     const currentMonthStr = today.toISOString().slice(0, 7);
+
+
+
+    useEffect(() => {
+
+         if(user){
+             return(
+                console.log('user loged in')
+            )
+            }else{
+                console.log('user not detected!')
+            }
+        
+
+    },[])
+
+
+
+
+
+
+
+
 
     // Top 10 ügyfél kimenő számlák összértéke szerint
     const iesireFacturi = bills.filter(f => f.tip_factura === "iesire");
@@ -73,12 +98,12 @@ export default function Bills() {
         new Date(f.data_scadenta) < azi
     );
 
-    useEffect(() => {
-        console.log("Top 10 clients (by outgoing invoices total):", top10Clienti);
-        console.log("Total incoming invoices this month:", totalIesiriAnCurent);
-        console.log("Total outgoing invoices this month:", totalIesiri);
-        console.log("Unpaid overdue outgoing invoices:", facturiIesireLejart);
-    }, [bills]);
+    // useEffect(() => {
+    //     console.log("Top 10 clients (by outgoing invoices total):", top10Clienti);
+    //     console.log("Total incoming invoices this month:", totalIesiriAnCurent);
+    //     console.log("Total outgoing invoices this month:", totalIesiri);
+    //     console.log("Unpaid overdue outgoing invoices:", facturiIesireLejart);
+    // }, [bills]);
 
     // Modal state
     const [selectedBill, setSelectedBill] = useState(null);
