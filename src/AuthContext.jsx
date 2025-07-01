@@ -13,6 +13,7 @@ useEffect(() => {
         const checkSession = async () => {
             try {
                 const session = await account.getSession("current");
+
                 if (session) {
                     const userData = await account.get();
                     setUser(userData);
@@ -20,15 +21,29 @@ useEffect(() => {
             } catch (error) {
                 // No active session or error
                 setUser(null);
-            } 
+            } finally {
+                setLoading(false);
+            }
         };
         checkSession();
     }, []);
 
+    //logout inaktivitas utan
+     useEffect(() => {
+        if (!user) return;
+
+        const timeout = setTimeout(() => {
+            logout();
+            console.log("User auto-logged out after 60 minutes");
+        }, 60 * 60 * 1000);
+
+        return () => clearTimeout(timeout);
+    }, [user]);
+
 
     // Login function
     const login = async (email, password) => {
-        await account.deleteSession("current");
+    
         await account.createEmailPasswordSession(email, password);
         const userData = await account.get();
         setUser(userData);
@@ -43,12 +58,23 @@ useEffect(() => {
     // Register function
     const register = async (email, password) => {
 
+
+        try {
+        await account.deleteSession("current");
+    } catch (_) {
+        // It's ok if no session existed
+    }
+
         await account.create(
             ID.unique(), // Correct function call
             email, // Use state values
             password,
 
         );
+         await account.createEmailPasswordSession(email, password);
+         const userData = await account.get();
+    setUser(userData);
+
     };
 
     return (

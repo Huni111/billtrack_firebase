@@ -12,7 +12,7 @@ export default function Settings() {
     
 
 
-    // Dummy login: username: admin, password: admin
+    // Dummy login: email: admin, password: admin
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoginError("");
@@ -26,7 +26,7 @@ export default function Settings() {
     const handleCreateUser = async (e) => {
         e.preventDefault();
         setUserMsg("");
-        if (!userForm.username || !userForm.password) {
+        if (!userForm.email || !userForm.password) {
             setUserMsg("Toate câmpurile sunt obligatorii!");
             return;
         }
@@ -64,7 +64,7 @@ export default function Settings() {
                     <h2 style={{ marginBottom: 10 }}>Autentificare</h2>
                     <div>
                         <label>E-mail</label>
-                        <input className='inputs' name="email" type="email" value={userForm.email ?? ""}
+                        <input className='inputs' name="email" type="email" 
                             placeholder="Email" value={loginForm.email} onChange={handleLoginChange} required />
                     </div>
                     <div>
@@ -81,7 +81,7 @@ export default function Settings() {
                     <h2 style={{ marginBottom: 10 }}>Creează Utilizator Nou</h2>
                     <div>
                         <label>Email</label>
-                        <input className='inputs'  type="email" name="username" value={userForm.username} onChange={handleUserChange} required />
+                        <input className='inputs'  type="email" name="email" value={userForm.email} onChange={handleUserChange} required />
                     </div>
                     <div>
                         <label>Parolă</label>
