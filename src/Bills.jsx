@@ -32,12 +32,6 @@ export default function Bills() {
 
 
 
-
-
-
-
-
-
     // Top 10 ügyfél kimenő számlák összértéke szerint
     const iesireFacturi = bills.filter(f => f.tip_factura === "iesire");
 

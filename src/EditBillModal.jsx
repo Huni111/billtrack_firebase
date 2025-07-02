@@ -64,8 +64,8 @@ export default function EditBillModal({ open, bill, onClose, onSave }) {
                         </select>
                     </div>
                     <div>
-                        <label>{form.tip_factura === "iesire" ? "Client" : "Furnizor"}: </label>
-                        <input name="client" value={form.client} onChange={handleChange} required />
+                        <label> {form.tip_factura === "iesire" ? "Client" : "Furnizor"}: </label>
+                        <input className="inputs" name="client" value={form.client} onChange={handleChange} required />
                     </div>
                     <div>
                         <label>Valoare totală: </label>
@@ -85,11 +85,11 @@ export default function EditBillModal({ open, bill, onClose, onSave }) {
                     </div>
                     <div>
                         <label>Serie: </label>
-                        <input name="serie" value={form.serie} onChange={handleChange} />
+                        <input className="inputs" name="serie" value={form.serie} onChange={handleChange} />
                     </div>
                     <div>
                         <label>Număr: </label>
-                        <input name="numar" value={form.numar} onChange={handleChange} />
+                        <input className="inputs" name="numar" value={form.numar} onChange={handleChange} />
                     </div>
                     <div style={{marginTop: 16}}>
                         <button type="submit" className="add-bill-save-btn">Salvează</button>

@@ -1,7 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Bills.css";
+import { dB } from "./appwriteConfig";
+
+
+const COMPANIES_COLLECTION_ID = "68650f37002e918f8716";
+const DATABASE_ID = "685a8b6f000745b9ad99";
+
 
 export default function AddBillModal({ open, onClose, onAdd }) {
+    const [companies, setCompanies] = useState([]);
     const [form, setForm] = useState({
         tip_factura: "iesire",
         client: "",
@@ -12,6 +19,20 @@ export default function AddBillModal({ open, onClose, onAdd }) {
         serie: "",
         numar: ""
     });
+
+    useEffect(() => {
+    const fetchCompanies = async () => {
+        try {
+            const res = await dB.listDocuments(DATABASE_ID, COMPANIES_COLLECTION_ID);
+            const names = res.documents.map(doc => doc.nume);
+            setCompanies(names);
+        } catch (error) {
+            console.error("Error fetching companies:", error);
+        }
+    };
+
+    if (open) fetchCompanies(); // Only fetch when modal is open
+}, [open]);
 
     if (!open) return null;
 
@@ -59,7 +80,7 @@ export default function AddBillModal({ open, onClose, onAdd }) {
                     </div>
                     <div>
                         <label>{form.tip_factura === "iesire" ? "Client" : "Furnizor"}: </label>
-                        <input className="inputs" name="client" value={form.client} onChange={handleChange} required />
+                        <input list="company-names" className="inputs" name="client" value={form.client} onChange={handleChange} required />
                     </div>
                     <div>
                         <label>Valoare totală: </label>
