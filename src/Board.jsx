@@ -106,6 +106,7 @@ const Board = () => {
 
     return (
         <>
+         <div className="main-content">
             <div className="dashboard-pie-chart-card">
                 <h2 style={{marginBottom: 0}}>Raport Intrare vs Iesire (Luna curentă)</h2>
                 <ResponsiveContainer width="100%" height={320}>
@@ -204,6 +205,7 @@ const Board = () => {
             </div>
             <div>
                 board
+            </div>
             </div>
         </>
     )

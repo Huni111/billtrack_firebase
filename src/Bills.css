@@ -1,5 +1,10 @@
 /* Bills.css - Styling for the Bills component */
 
+.main-content {
+  margin-left: 70px; /* Match sidebar width */
+  padding: 24px 24px 0 24px;
+}
+
 .bills-lists-wrapper {
   display: flex;
   gap: 24px;
@@ -174,6 +179,13 @@
 }
 
 /* Add Bill Modal and Form Styles */
+.add-bill-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-left: 70px; /* Match sidebar width */
+  margin-top: 24px;
+}
+
 .add-bill-btn {
   background: #3498db;
   color: #fff;

@@ -129,9 +129,11 @@ export default function Bills() {
     };
 
     return (
-        <>
+        <div className="main-content">
             {/* <div>{data}</div> */}
-            <button className="add-bill-btn" onClick={() => setAddModalOpen(true)} style={{marginBottom: 16}}>Adaugă Factură Nouă</button>
+            <div className="add-bill-btn-wrapper">
+                <button className="add-bill-btn" onClick={() => setAddModalOpen(true)} style={{marginBottom: 16}}>Adaugă Factură Nouă</button>
+            </div>
             <AddBillModal
                 open={addModalOpen}
                 onClose={() => setAddModalOpen(false)}
@@ -215,7 +217,7 @@ export default function Bills() {
                 onClose={() => { setEditModalOpen(false); setEditBill(null); }}
                 onSave={handleEditSave}
             />
-        </>
+        </div>
     )
 }
 
