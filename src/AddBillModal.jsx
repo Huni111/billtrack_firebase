@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Bills.css";
 import { dB } from "./appwriteConfig";
+import  { ID } from "appwrite";
 
 
 const COMPANIES_COLLECTION_ID = "68650f37002e918f8716";
@@ -44,14 +45,23 @@ export default function AddBillModal({ open, onClose, onAdd }) {
         }));
     };
 
-    const handleSubmit = e => {
+    const handleSubmit = async  e => {
         e.preventDefault();
         if (!form.client || !form.valoare_totala || !form.data_emiteri || !form.data_scadenta) return;
-        onAdd({
+
+        const createdBill = await dB.createDocument(
+        DATABASE_ID,
+        COMPANIES_COLLECTION_ID,
+        ID.unique(),
+        {
             ...form,
             valoare_totala: parseFloat(form.valoare_totala),
             platit: !!form.platit
-        });
+        }
+    );
+
+    onAdd(createdBill)
+        
         setForm({
             tip_factura: "iesire",
             client: "",

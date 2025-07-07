@@ -20,9 +20,9 @@ export default function Bills() {
     useEffect(() => {
 
          if(user){
-             return(
+             
                 console.log('user loged in')
-            )
+            
             }else{
                 console.log('user not detected!')
             }
