@@ -11,7 +11,7 @@ const DATABASE_ID = "685a8b6f000745b9ad99";
 export default function AddBillModal({ open, onClose, onAdd }) {
     const [companies, setCompanies] = useState([]);
     const [form, setForm] = useState({
-        tip_factura: "iesire",
+        tip_factura: "",
         client: "",
         valoare_totala: "",
         data_emiteri: "",
@@ -56,6 +56,7 @@ export default function AddBillModal({ open, onClose, onAdd }) {
         {
             ...form,
             valoare_totala: parseFloat(form.valoare_totala),
+            numar: form.numar === "" ? null : parseInt(form.numar, 10),
             platit: !!form.platit
         }
     );
@@ -114,7 +115,7 @@ export default function AddBillModal({ open, onClose, onAdd }) {
                     </div>
                     <div>
                         <label>Număr: </label>
-                        <input className="inputs" name="numar" value={form.numar} onChange={handleChange} />
+                        <input className="inputs" name="numar" type="number" value={form.numar} onChange={handleChange} />
                     </div>
                     <div style={{marginTop: 16}}>
                         <button type="submit" className="add-bill-save-btn">Salvează</button>
