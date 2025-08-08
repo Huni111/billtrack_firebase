@@ -4,31 +4,59 @@ import './Bills.css'
 import AddBillModal from './AddBillModal'
 import EditBillModal from './EditBillModal'
 import { useAuth } from "./AuthContext"
+import { dB } from "./appwriteConfig";
+
 
 export default function Bills() {
     // Local state for bills (so we can add new ones)
     const [bills, setBills] = React.useState(facturiData);
     const [addModalOpen, setAddModalOpen] = React.useState(false);
-    const {user} = useAuth()
+    const { user } = useAuth()
 
     const today = new Date();
     const currentYear = today.getFullYear();
     const currentMonthStr = today.toISOString().slice(0, 7);
 
+    const COMPANIES_COLLECTION_ID = import.meta.env.VITE_COMPANIES_COLLECTION_ID
+    const DATABASE_ID = import.meta.env.VITE_DATABASE_ID;
 
 
     useEffect(() => {
 
-         if(user){
-             
-                console.log('user loged in')
-            
-            }else{
-                console.log('user not detected!')
-            }
-        
+        //  if(user){
+        //         console.log('user loged inn')
+        //     }else{
+        //         console.log('user not detected!')
+        //     }
 
-    },[])
+
+        const fetchCompanies = async () => {
+            try {
+                const res = await dB.listDocuments(DATABASE_ID, COMPANIES_COLLECTION_ID);
+
+                const bils = res.documents.map(doc => ({ ...doc }));
+                setBills(bils);
+
+
+
+
+
+
+            } catch (error) {
+                console.error("❌ Appwrite error:", err);
+            }
+
+
+
+
+
+        };
+        fetchCompanies();
+
+
+
+
+    }, [])
 
 
 
@@ -132,7 +160,7 @@ export default function Bills() {
         <div className="main-content">
             {/* <div>{data}</div> */}
             <div className="add-bill-btn-wrapper">
-                <button className="add-bill-btn" onClick={() => setAddModalOpen(true)} style={{marginBottom: 16}}>Adaugă Factură Nouă</button>
+                <button className="add-bill-btn" onClick={() => setAddModalOpen(true)} style={{ marginBottom: 16 }}>Adaugă Factură Nouă</button>
             </div>
             <AddBillModal
                 open={addModalOpen}
@@ -158,7 +186,7 @@ export default function Bills() {
                             <li className="no-overdue">Nicio factura lejartă</li>
                         ) : (
                             facturiIesireLejart.map((factura, idx) => (
-                                <li key={idx} className="overdue-bill-item" onClick={() => handleBillClick(factura)} style={{cursor: 'pointer'}}>
+                                <li key={idx} className="overdue-bill-item" onClick={() => handleBillClick(factura)} style={{ cursor: 'pointer' }}>
                                     <span className="client-name">{factura.client}</span>
                                     <span className="bill-value">{factura.valoare_totala.toFixed(2)}</span>
                                     <span className="bill-due-date">Scadentă: {factura.data_scadenta}</span>
@@ -174,7 +202,7 @@ export default function Bills() {
                             <li className="no-overdue">Nicio factura lejartă</li>
                         ) : (
                             facturiIntrareLejart.map((factura, idx) => (
-                                <li key={idx} className="overdue-bill-item" onClick={() => handleBillClick(factura)} style={{cursor: 'pointer'}}>
+                                <li key={idx} className="overdue-bill-item" onClick={() => handleBillClick(factura)} style={{ cursor: 'pointer' }}>
                                     <span className="client-name">{factura.client}</span>
                                     <span className="bill-value">{factura.valoare_totala.toFixed(2)}</span>
                                     <span className="bill-due-date">Scadentă: {factura.data_scadenta}</span>
@@ -211,7 +239,7 @@ export default function Bills() {
                     rowsPerPage={10}
                 />
             </div>
-        <EditBillModal
+            <EditBillModal
                 open={editModalOpen}
                 bill={editBill}
                 onClose={() => { setEditModalOpen(false); setEditBill(null); }}
@@ -244,11 +272,11 @@ function PaginatedBillsTable({ bills, onBillClick, onEditClick, rowsPerPage }) {
                 <tbody>
                     {pageBills.map((bill, idx) => (
                         <tr key={startIdx + idx} className="paginated-bill-row">
-                            <td onClick={() => onBillClick(bill)} style={{cursor: 'pointer'}}>{bill.tip_factura === 'iesire' ? 'Iesire' : 'Intrare'}</td>
-                            <td onClick={() => onBillClick(bill)} style={{cursor: 'pointer'}}>{bill.client}</td>
-                            <td onClick={() => onBillClick(bill)} style={{cursor: 'pointer'}}>{bill.valoare_totala.toFixed(2)}</td>
-                            <td onClick={() => onBillClick(bill)} style={{cursor: 'pointer'}}>{bill.data_scadenta}</td>
-                            <td onClick={() => onBillClick(bill)} style={{cursor: 'pointer'}}>{bill.platit ? 'Da' : 'Nu'}</td>
+                            <td onClick={() => onBillClick(bill)} style={{ cursor: 'pointer' }}>{bill.tip_factura === 'iesire' ? 'Iesire' : 'Intrare'}</td>
+                            <td onClick={() => onBillClick(bill)} style={{ cursor: 'pointer' }}>{bill.client}</td>
+                            <td onClick={() => onBillClick(bill)} style={{ cursor: 'pointer' }}>{bill.valoare_totala.toFixed(2)}</td>
+                            <td onClick={() => onBillClick(bill)} style={{ cursor: 'pointer' }}>{bill.data_scadenta}</td>
+                            <td onClick={() => onBillClick(bill)} style={{ cursor: 'pointer' }}>{bill.platit ? 'Da' : 'Nu'}</td>
                             <td><button className="edit-bill-btn" onClick={e => { e.stopPropagation(); onEditClick(bill); }}>Editează</button></td>
                         </tr>
                     ))}

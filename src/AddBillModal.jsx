@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./Bills.css";
 import { dB } from "./appwriteConfig";
-import  { ID } from "appwrite";
+import { ID } from "appwrite";
+
 
 
 const COMPANIES_COLLECTION_ID = "68650f37002e918f8716";
@@ -22,18 +23,22 @@ export default function AddBillModal({ open, onClose, onAdd }) {
     });
 
     useEffect(() => {
-    const fetchCompanies = async () => {
-        try {
-            const res = await dB.listDocuments(DATABASE_ID, COMPANIES_COLLECTION_ID);
-            const names = res.documents.map(doc => doc.nume);
-            setCompanies(names);
-        } catch (error) {
-            console.error("Error fetching companies:", error);
-        }
-    };
+        const fetchCompanies = async () => {
+            try {
+                const res = await dB.listDocuments(DATABASE_ID, COMPANIES_COLLECTION_ID);
+                const names = res.documents.map(doc => doc.client);
 
-    if (open) fetchCompanies(); // Only fetch when modal is open
-}, [open]);
+                const uniqueNames = [...new Set(names)];
+
+                setCompanies(uniqueNames);
+
+            } catch (error) {
+                console.error("Error fetching companies:", error);
+            }
+        };
+
+        if (open) fetchCompanies();
+    }, [open]);
 
     if (!open) return null;
 
@@ -45,24 +50,24 @@ export default function AddBillModal({ open, onClose, onAdd }) {
         }));
     };
 
-    const handleSubmit = async  e => {
+    const handleSubmit = async e => {
         e.preventDefault();
         if (!form.client || !form.valoare_totala || !form.data_emiteri || !form.data_scadenta) return;
 
         const createdBill = await dB.createDocument(
-        DATABASE_ID,
-        COMPANIES_COLLECTION_ID,
-        ID.unique(),
-        {
-            ...form,
-            valoare_totala: parseFloat(form.valoare_totala),
-            numar: form.numar === "" ? null : parseInt(form.numar, 10),
-            platit: !!form.platit
-        }
-    );
+            DATABASE_ID,
+            COMPANIES_COLLECTION_ID,
+            ID.unique(),
+            {
+                ...form,
+                valoare_totala: parseFloat(form.valoare_totala),
+                numar: form.numar === "" ? null : parseInt(form.numar, 10),
+                platit: !!form.platit
+            }
+        );
 
-    onAdd(createdBill)
-        
+        onAdd(createdBill)
+
         setForm({
             tip_factura: "iesire",
             client: "",
@@ -93,6 +98,11 @@ export default function AddBillModal({ open, onClose, onAdd }) {
                         <label>{form.tip_factura === "iesire" ? "Client" : "Furnizor"}: </label>
                         <input list="company-names" className="inputs" name="client" value={form.client} onChange={handleChange} required />
                     </div>
+                    <datalist id="company-names">
+                        {companies.map((name, index) => (
+                            <option key={index} value={name} />
+                        ))}
+                    </datalist>
                     <div>
                         <label>Valoare totală: </label>
                         <input className="inputs" name="valoare_totala" type="number" step="0.01" value={form.valoare_totala} onChange={handleChange} required />
@@ -117,7 +127,7 @@ export default function AddBillModal({ open, onClose, onAdd }) {
                         <label>Număr: </label>
                         <input className="inputs" name="numar" type="number" value={form.numar} onChange={handleChange} />
                     </div>
-                    <div style={{marginTop: 16}}>
+                    <div style={{ marginTop: 16 }}>
                         <button type="submit" className="add-bill-save-btn">Salvează</button>
                     </div>
                 </form>
