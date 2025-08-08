@@ -13,6 +13,9 @@ export default function EditBillModal({ open, bill, onClose, onSave }) {
         numar: ""
     });
 
+    const COMPANIES_COLLECTION_ID = import.meta.env.VITE_COMPANIES_COLLECTION_ID
+    const DATABASE_ID = import.meta.env.VITE_DATABASE_ID;
+
     useEffect(() => {
         if (bill) {
             setForm({
