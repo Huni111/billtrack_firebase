@@ -42,12 +42,12 @@ export default function Bills() {
 
                 const bils = res.documents.map(doc => ({
                     $id: doc.$id,
-                    nr_factura: doc.numar ? String(doc.numar) : '',           // convert number → string
+                    numar: doc.numar ? Number(doc.numar) : '',           // convert number → string
                     tip_factura: doc.tip_factura || '',                       // e.g., "intrare" or "iesire"
                     data_emiteri: formatDate(doc.data_emiteri),              // "yyyy-MM-dd"
                     data_scadenta: formatDate(doc.data_scadenta),            // "yyyy-MM-dd"
-                    valoare_fara_tva: doc.valoare_fara_tva || 0,             // supply 0 if missing
-                    valoare_tva: doc.valoare_tva || 0,
+    
+                    serie: doc.serie || '',
                     valoare_totala: doc.valoare_totala || 0,
                     platit: !!doc.platit,                                     // ensure boolean
                     client: doc.client || '',
@@ -178,8 +178,6 @@ export default function Bills() {
           tip_factura: updatedBill.tip_factura,
           data_emiteri: updatedBill.data_emiteri,
           data_scadenta: updatedBill.data_scadenta,
-          valoare_fara_tva: updatedBill.valoare_fara_tva,
-          valoare_tva: updatedBill.valoare_tva,
           valoare_totala: updatedBill.valoare_totala,
           platit: updatedBill.platit,
           client: updatedBill.client,

@@ -37,19 +37,31 @@ export default function EditBillModal({ open, bill, onClose, onSave }) {
         const { name, value, type, checked } = e.target;
         setForm(f => ({
             ...f,
-            [name]: type === "checkbox" ? checked : value
+            [name]:
+                type === "checkbox" ? checked :
+                (name === "numar" ? (value === '' ? '' : parseInt(value, 10)) : value)
         }));
     };
 
     const handleSubmit = e => {
         e.preventDefault();
         if (!form.client || !form.valoare_totala || !form.data_emiteri || !form.data_scadenta) return;
+
+        const numarValue = parseInt(form.numar, 10);
+        if (isNaN(numarValue)) {
+            alert("Introduceți un număr valid pentru Număr.");
+            return;
+        }
+
         onSave({
             ...bill,
             ...form,
             valoare_totala: parseFloat(form.valoare_totala),
+            numar: numarValue,
             platit: !!form.platit
         });
+        console.log(typeof(form.numar))
+        console.log(form.numar)
         onClose();
     };
 
@@ -92,7 +104,7 @@ export default function EditBillModal({ open, bill, onClose, onSave }) {
                     </div>
                     <div>
                         <label>Număr: </label>
-                        <input className="inputs" name="numar" value={form.numar} onChange={handleChange} />
+                        <input className="inputs" type="number" name="numar" value={form.numar} onChange={handleChange} required />
                     </div>
                     <div style={{marginTop: 16}}>
                         <button type="submit" className="add-bill-save-btn">Salvează</button>
