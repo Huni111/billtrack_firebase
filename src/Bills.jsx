@@ -52,6 +52,8 @@ export default function Bills() {
                     platit: !!doc.platit,                                     // ensure boolean
                     client: doc.client || '',
                 }));
+                bils.sort((a, b) => new Date(b.data_emiteri) - new Date(a.data_emiteri));
+
                 setBills(bils);
 
 
