@@ -5,6 +5,7 @@ import AddBillModal from './AddBillModal'
 import EditBillModal from './EditBillModal'
 import { useAuth } from "./AuthContext"
 import { dB } from "./appwriteConfig";
+import { Query } from "appwrite";
 
 
 export default function Bills() {
@@ -32,7 +33,8 @@ export default function Bills() {
 
         const fetchCompanies = async () => {
             try {
-                const res = await dB.listDocuments(DATABASE_ID, COMPANIES_COLLECTION_ID);
+                const res = await dB.listDocuments(DATABASE_ID, COMPANIES_COLLECTION_ID, [Query.limit(5000)]);
+                console.log("Fetched documents from backend:", res.documents);
                
 
                 const formatDate = (isoString) => {
@@ -43,12 +45,12 @@ export default function Bills() {
                 const bils = res.documents.map(doc => ({
                     $id: doc.$id,
                     numar: doc.numar ? Number(doc.numar) : '',           // convert number → string
-                    tip_factura: doc.tip_factura || '',                       // e.g., "intrare" or "iesire"
+                    tip_factura: doc.tip_factura ? doc.tip_factura.toLowerCase() : '',                       // e.g., "intrare" or "iesire"
                     data_emiteri: formatDate(doc.data_emiteri),              // "yyyy-MM-dd"
                     data_scadenta: formatDate(doc.data_scadenta),            // "yyyy-MM-dd"
     
                     serie: doc.serie || '',
-                    valoare_totala: doc.valoare_totala || 0,
+                    valoare_totala: parseFloat(doc.valoare_totala) || 0,
                     platit: !!doc.platit,                                     // ensure boolean
                     client: doc.client || '',
                 }));
@@ -62,7 +64,7 @@ export default function Bills() {
 
 
             } catch (error) {
-                console.error("❌ Appwrite error:", err);
+                console.error("❌ Appwrite error:", error);
             }
 
 
@@ -229,7 +231,7 @@ export default function Bills() {
                             <li className="no-overdue">Nicio factura expirata</li>
                         ) : (
                             facturiIesireLejart.map((factura, idx) => (
-                                <li key={idx} className="overdue-bill-item" onClick={() => handleBillClick(factura)} style={{ cursor: 'pointer' }}>
+                                <li key={idx} className="overdue-bill-item" onClick={() => handleEditClick(factura)} style={{ cursor: 'pointer' }}>
                                     <span className="client-name">{factura.client}</span>
                                     <span className="bill-value">{factura.valoare_totala.toFixed(2)}</span>
                                     <span className="bill-due-date">Scadentă: {factura.data_scadenta}</span>
@@ -245,7 +247,7 @@ export default function Bills() {
                             <li className="no-overdue">Nicio factura expirata</li>
                         ) : (
                             facturiIntrareLejart.map((factura, idx) => (
-                                <li key={idx} className="overdue-bill-item" onClick={() => handleBillClick(factura)} style={{ cursor: 'pointer' }}>
+                                <li key={idx} className="overdue-bill-item" onClick={() => handleEditClick(factura)} style={{ cursor: 'pointer' }}>
                                     <span className="client-name">{factura.client}</span>
                                     <span className="bill-value">{factura.valoare_totala.toFixed(2)}</span>
                                     <span className="bill-due-date">Scadentă: {factura.data_scadenta}</span>

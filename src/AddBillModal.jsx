@@ -60,7 +60,7 @@ export default function AddBillModal({ open, onClose, onAdd }) {
             ID.unique(),
             {
                 ...form,
-                valoare_totala: parseInt(form.valoare_totala),
+                valoare_totala: parseFloat(form.valoare_totala),
                 numar: form.numar === "" ? null : parseInt(form.numar, 10),
                 platit: !!form.platit
             }
