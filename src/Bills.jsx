@@ -212,7 +212,7 @@ export default function Bills() {
             />
             <div className="bills-lists-wrapper">
                 <div className="top-clients-container card-list">
-                    <h2>Top 10 Clients</h2>
+                    <h2>Top 10 Clienți</h2>
                     <ul className="top-clients-list">
                         {top10Clienti.map((client, index) => (
                             <li key={index} className="client-item">
@@ -223,10 +223,10 @@ export default function Bills() {
                     </ul>
                 </div>
                 <div className="overdue-bills-container card-list">
-                    <h2>Facturi Iesire Lejart</h2>
+                    <h2>Facturi Iesire Expirate</h2>
                     <ul className="overdue-bills-list">
                         {facturiIesireLejart.length === 0 ? (
-                            <li className="no-overdue">Nicio factura lejartă</li>
+                            <li className="no-overdue">Nicio factura expirata</li>
                         ) : (
                             facturiIesireLejart.map((factura, idx) => (
                                 <li key={idx} className="overdue-bill-item" onClick={() => handleBillClick(factura)} style={{ cursor: 'pointer' }}>
@@ -239,10 +239,10 @@ export default function Bills() {
                     </ul>
                 </div>
                 <div className="overdue-bills-container card-list">
-                    <h2>Facturi Intrare Lejart</h2>
+                    <h2>Facturi Intrare Expirate</h2>
                     <ul className="overdue-bills-list">
                         {facturiIntrareLejart.length === 0 ? (
-                            <li className="no-overdue">Nicio factura lejartă</li>
+                            <li className="no-overdue">Nicio factura expirata</li>
                         ) : (
                             facturiIntrareLejart.map((factura, idx) => (
                                 <li key={idx} className="overdue-bill-item" onClick={() => handleBillClick(factura)} style={{ cursor: 'pointer' }}>

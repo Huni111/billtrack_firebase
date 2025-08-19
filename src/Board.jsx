@@ -204,7 +204,7 @@ const Board = () => {
                 {/* Aging Horizontal Bar Charts */}
                 <div style={{ display: 'flex', gap: 32, marginTop: 32, flexWrap: 'wrap' }}>
                     <div className="dashboard-pie-chart-card" style={{ flex: 1, minWidth: 320 }}>
-                        <h2 style={{ marginBottom: 0 }}>Aging Facturi Intrare Lejart</h2>
+                        <h2 style={{ marginBottom: 0 }}>Aging Facturi Intrare Expirate</h2>
                         <ResponsiveContainer width="100%" height={320}>
                             <BarChart
                                 data={Object.entries(facturiIntrareLejart.reduce((acc, f) => {
@@ -226,7 +226,7 @@ const Board = () => {
                         </ResponsiveContainer>
                     </div>
                     <div className="dashboard-pie-chart-card" style={{ flex: 1, minWidth: 320 }}>
-                        <h2 style={{ marginBottom: 0 }}>Aging Facturi Iesire Lejart</h2>
+                        <h2 style={{ marginBottom: 0 }}>Aging Facturi Iesire Expirate</h2>
                         <ResponsiveContainer width="100%" height={320}>
                             <BarChart
                                 data={Object.entries(facturiIesireLejart.reduce((acc, f) => {
