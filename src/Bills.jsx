@@ -34,7 +34,7 @@ export default function Bills() {
         const fetchCompanies = async () => {
             try {
                 const res = await dB.listDocuments(DATABASE_ID, COMPANIES_COLLECTION_ID, [Query.limit(5000)]);
-                console.log("Fetched documents from backend:", res.documents);
+                // console.log("Fetched documents from backend:", res.documents);
                
 
                 const formatDate = (isoString) => {

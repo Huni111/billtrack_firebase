@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Bills.css";
 import { dB } from "./appwriteConfig";
 import { ID } from "appwrite";
-
+import { Query } from "appwrite";
 
 
 const COMPANIES_COLLECTION_ID = "68650f37002e918f8716";
@@ -25,10 +25,12 @@ export default function AddBillModal({ open, onClose, onAdd }) {
     useEffect(() => {
         const fetchCompanies = async () => {
             try {
-                const res = await dB.listDocuments(DATABASE_ID, COMPANIES_COLLECTION_ID);
+                const res = await dB.listDocuments(DATABASE_ID, COMPANIES_COLLECTION_ID, [Query.limit(5000)]);
                 const names = res.documents.map(doc => doc.client);
 
                 const uniqueNames = [...new Set(names)];
+
+                console.log(uniqueNames);
 
                 setCompanies(uniqueNames);
 
