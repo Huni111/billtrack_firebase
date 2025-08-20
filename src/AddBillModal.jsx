@@ -3,13 +3,15 @@ import "./Bills.css";
 import { dB } from "./appwriteConfig";
 import { ID } from "appwrite";
 import { Query } from "appwrite";
+import { useBills } from "./BillsContext";
 
 
 const COMPANIES_COLLECTION_ID = "68650f37002e918f8716";
 const DATABASE_ID = "685a8b6f000745b9ad99";
 
 
-export default function AddBillModal({ open, onClose, onAdd }) {
+export default function AddBillModal({ open, onClose }) {
+    const { addBill } = useBills();
     const [companies, setCompanies] = useState([]);
     const [form, setForm] = useState({
         tip_factura: "",
@@ -70,7 +72,7 @@ export default function AddBillModal({ open, onClose, onAdd }) {
             }
         );
 
-        onAdd(createdBill)
+        addBill(createdBill)
 
         setForm({
             tip_factura: "iesire",
