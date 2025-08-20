@@ -212,7 +212,10 @@ const Board = () => {
                                     acc[f.client] = (acc[f.client] || 0) + f.valoare_totala;
                                     return acc;
                                 }, {}))
-                                    .map(([name, value]) => ({ name, value }))
+                                    .map(([name, value]) => ({ 
+                                        name: name.length > 8 ? name.substring(0, 8) + '...' : name, 
+                                        value 
+                                    }))
                                     .sort((a, b) => b.value - a.value)
                                 }
                                 layout="vertical"
@@ -234,7 +237,10 @@ const Board = () => {
                                     acc[f.client] = (acc[f.client] || 0) + f.valoare_totala;
                                     return acc;
                                 }, {}))
-                                    .map(([name, value]) => ({ name, value }))
+                                    .map(([name, value]) => ({ 
+                                        name: name.length > 8 ? name.substring(0, 8) + '...' : name, 
+                                        value 
+                                    }))
                                     .sort((a, b) => b.value - a.value)
                                 }
                                 layout="vertical"
