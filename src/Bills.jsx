@@ -4,13 +4,13 @@ import './Bills.css'
 import AddBillModal from './AddBillModal'
 import EditBillModal from './EditBillModal'
 import { useAuth } from "./AuthContext"
+import { useBills } from "./BillsContext"
 import { dB } from "./appwriteConfig";
 import { Query } from "appwrite";
 
 
 export default function Bills() {
-    // Local state for bills (so we can add new ones)
-    const [bills, setBills] = React.useState(facturiData);
+    const { bills, addBill, updateBill } = useBills();
     const [addModalOpen, setAddModalOpen] = React.useState(false);
     const { user } = useAuth()
 
@@ -20,64 +20,6 @@ export default function Bills() {
 
     const COMPANIES_COLLECTION_ID = import.meta.env.VITE_COMPANIES_COLLECTION_ID
     const DATABASE_ID = import.meta.env.VITE_DATABASE_ID;
-
-
-    useEffect(() => {
-
-        //  if(user){
-        //         console.log('user loged inn')
-        //     }else{
-        //         console.log('user not detected!')
-        //     }
-
-
-        const fetchCompanies = async () => {
-            try {
-                const res = await dB.listDocuments(DATABASE_ID, COMPANIES_COLLECTION_ID, [Query.limit(5000)]);
-                // console.log("Fetched documents from backend:", res.documents);
-               
-
-                const formatDate = (isoString) => {
-                    if (!isoString) return '';
-                    return new Date(isoString).toISOString().slice(0, 10);
-                };
-
-                const bils = res.documents.map(doc => ({
-                    $id: doc.$id,
-                    numar: doc.numar ? Number(doc.numar) : '',           // convert number → string
-                    tip_factura: doc.tip_factura ? doc.tip_factura.toLowerCase() : '',                       // e.g., "intrare" or "iesire"
-                    data_emiteri: formatDate(doc.data_emiteri),              // "yyyy-MM-dd"
-                    data_scadenta: formatDate(doc.data_scadenta),            // "yyyy-MM-dd"
-    
-                    serie: doc.serie || '',
-                    valoare_totala: parseFloat(doc.valoare_totala) || 0,
-                    platit: !!doc.platit,                                     // ensure boolean
-                    client: doc.client || '',
-                }));
-                bils.sort((a, b) => new Date(b.data_emiteri) - new Date(a.data_emiteri));
-
-                setBills(bils);
-
-
-
-
-
-
-            } catch (error) {
-                console.error("❌ Appwrite error:", error);
-            }
-
-
-
-
-
-        };
-        fetchCompanies();
-
-
-
-
-    }, [])
 
 
 
@@ -178,7 +120,7 @@ export default function Bills() {
         COMPANIES_COLLECTION_ID,
         updatedBill.$id,
         {
-          numar: updatedBill.nr_factura,
+          numar: updatedBill.numar,
           tip_factura: updatedBill.tip_factura,
           data_emiteri: updatedBill.data_emiteri,
           data_scadenta: updatedBill.data_scadenta,
@@ -189,9 +131,7 @@ export default function Bills() {
         }
       );
 
-      setBills(bills =>
-        bills.map(b => (b.$id === updatedBill.$id ? updatedBill : b))
-      );
+      updateBill(updatedBill);
 
       setEditModalOpen(false);
       setEditBill(null);
@@ -210,7 +150,7 @@ export default function Bills() {
             <AddBillModal
                 open={addModalOpen}
                 onClose={() => setAddModalOpen(false)}
-                onAdd={bill => setBills(bills => [...bills, bill])}
+                onAdd={addBill}
             />
             <div className="bills-lists-wrapper">
                 <div className="top-clients-container card-list">

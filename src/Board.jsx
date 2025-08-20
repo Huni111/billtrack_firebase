@@ -1,60 +1,15 @@
 import React, { useEffect } from "react";
 import facturiData from '../data.json';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, XAxis, YAxis } from 'recharts';
-import { dB } from "./appwriteConfig";
-import { Query } from "appwrite";
+import { useBills } from "./BillsContext";
 
 
 const Board = () => {
-
-    const [bills, setBills] = React.useState(facturiData);
-    const [addModalOpen, setAddModalOpen] = React.useState(false);
+    const { bills, loading } = useBills();
 
     const today = new Date();
     const currentYear = today.getFullYear();
     const currentMonthStr = today.toISOString().slice(0, 7);
-    const COMPANIES_COLLECTION_ID = import.meta.env.VITE_COMPANIES_COLLECTION_ID
-    const DATABASE_ID = import.meta.env.VITE_DATABASE_ID;
-
-
-    useEffect(() => {
-
-        const fetchCompanies = async () => {
-            try {
-                const res = await dB.listDocuments(DATABASE_ID, COMPANIES_COLLECTION_ID, [Query.limit(5000)]);
-
-                const formatDate = (isoString) => {
-                    if (!isoString) return '';
-                    return new Date(isoString).toISOString().slice(0, 10);
-                };
-
-                const bils = res.documents.map(doc => ({
-                    $id: doc.$id,
-                    nr_factura: doc.numar ? String(doc.numar) : '',           // convert number → string
-                    tip_factura: doc.tip_factura ? doc.tip_factura.toLowerCase() : '',                       // e.g., "intrare" or "iesire"
-                    data_emiteri: formatDate(doc.data_emiteri),              // "yyyy-MM-dd"
-                    data_scadenta: formatDate(doc.data_scadenta),            // "yyyy-MM-dd"
-                    valoare_fara_tva: doc.valoare_fara_tva || 0,             // supply 0 if missing
-                    valoare_tva: doc.valoare_tva || 0,
-                    valoare_totala: parseFloat(doc.valoare_totala) || 0,
-                    platit: !!doc.platit,                                     // ensure boolean
-                    client: doc.client || '',
-                }));
-                setBills(bils);
-                console.log(bils);
-
-
-            } catch (error) {
-                console.error("❌ Appwrite error:", error);
-            }
-
-
-        };
-        fetchCompanies();
-
-
-
-    }, [])
 
 
     // Top 10 ügyfél kimenő számlák összértéke szerint

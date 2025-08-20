@@ -6,6 +6,7 @@ import Board from './Board';
 import Setting from './Setting';
 import Nou from './Nou'
 import { AuthProvider } from "./AuthContext";
+import { BillsProvider } from "./BillsContext";
 
 
 
@@ -40,9 +41,11 @@ function App() {
   return (
     <>
     <AuthProvider>
-      <RouterProvider router={router}>
-        {router}
-      </RouterProvider>
+      <BillsProvider>
+        <RouterProvider router={router}>
+          {router}
+        </RouterProvider>
+      </BillsProvider>
       </AuthProvider>
     </>
   );
