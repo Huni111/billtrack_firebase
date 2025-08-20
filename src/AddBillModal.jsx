@@ -64,7 +64,9 @@ export default function AddBillModal({ open, onClose, onAdd }) {
                 ...form,
                 valoare_totala: parseFloat(form.valoare_totala),
                 numar: form.numar === "" ? null : parseInt(form.numar, 10),
-                platit: !!form.platit
+                platit: !!form.platit,
+                data_emiteri: form.data_emiteri, // Keep as YYYY-MM-DD format
+                data_scadenta: form.data_scadenta // Keep as YYYY-MM-DD format
             }
         );
 

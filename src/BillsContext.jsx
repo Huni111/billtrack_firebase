@@ -24,24 +24,26 @@ export const BillsProvider = ({ children }) => {
             setLoading(true);
             const res = await dB.listDocuments(DATABASE_ID, COMPANIES_COLLECTION_ID, [Query.limit(5000)]);
 
-            const formatDate = (isoString) => {
-                if (!isoString) return '';
-                return new Date(isoString).toISOString().slice(0, 10);
+            const formatDate = (dateString) => {
+                if (!dateString) return '';
+                // If it's already in YYYY-MM-DD format, return as is
+                if (typeof dateString === 'string' && dateString.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                    return dateString;
+                }
+                // Otherwise, convert from ISO format to YYYY-MM-DD
+                return new Date(dateString).toISOString().slice(0, 10);
             };
 
             const bils = res.documents.map(doc => ({
                 $id: doc.$id,
-                nr_factura: doc.numar ? String(doc.numar) : '',
-                numar: doc.numar ? Number(doc.numar) : '',
-                tip_factura: doc.tip_factura ? doc.tip_factura.toLowerCase() : '',
+                tip_factura: doc.tip_factura || "iesire",
+                client: doc.client || "",
+                valoare_totala: doc.valoare_totala || "",
                 data_emiteri: formatDate(doc.data_emiteri),
                 data_scadenta: formatDate(doc.data_scadenta),
-                valoare_fara_tva: doc.valoare_fara_tva || 0,
-                valoare_tva: doc.valoare_tva || 0,
-                valoare_totala: parseFloat(doc.valoare_totala) || 0,
                 platit: !!doc.platit,
-                client: doc.client || '',
-                serie: doc.serie || '',
+                serie: doc.serie || "",
+                numar: doc.numar || ""
             }));
 
             // Sort by emission date (newest first)
@@ -59,20 +61,27 @@ export const BillsProvider = ({ children }) => {
     }, []);
 
     const addBill = (newBill) => {
+        const formatDate = (dateString) => {
+            if (!dateString) return '';
+            // If it's already in YYYY-MM-DD format, return as is
+            if (typeof dateString === 'string' && dateString.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                return dateString;
+            }
+            // Otherwise, convert from ISO format to YYYY-MM-DD
+            return new Date(dateString).toISOString().slice(0, 10);
+        };
+
         // Format the new bill to match our data structure
         const formattedBill = {
             $id: newBill.$id,
-            nr_factura: newBill.numar ? String(newBill.numar) : '',
-            numar: newBill.numar ? Number(newBill.numar) : '',
-            tip_factura: newBill.tip_factura ? newBill.tip_factura.toLowerCase() : '',
-            data_emiteri: newBill.data_emiteri,
-            data_scadenta: newBill.data_scadenta,
-            valoare_fara_tva: newBill.valoare_fara_tva || 0,
-            valoare_tva: newBill.valoare_tva || 0,
-            valoare_totala: parseFloat(newBill.valoare_totala) || 0,
+            tip_factura: newBill.tip_factura || "iesire",
+            client: newBill.client || "",
+            valoare_totala: newBill.valoare_totala || "",
+            data_emiteri: formatDate(newBill.data_emiteri),
+            data_scadenta: formatDate(newBill.data_scadenta),
             platit: !!newBill.platit,
-            client: newBill.client || '',
-            serie: newBill.serie || '',
+            serie: newBill.serie || "",
+            numar: newBill.numar || ""
         };
 
         setBills(prevBills => {
