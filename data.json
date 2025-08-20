@@ -8,7 +8,7 @@
     "valoare_tva": 950,
     "valoare_totala": 5950,
     "platit": false,
-    "client": "Tech Solutions SRL"
+    "client":  "Îcârcare...."
   },
   {
     "nr_factura": "INV002",
@@ -19,7 +19,7 @@
     "valoare_tva": 456,
     "valoare_totala": 2856,
     "platit": true,
-    "client": "Office Supplies SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV003",
@@ -30,7 +30,7 @@
     "valoare_tva": 608,
     "valoare_totala": 3808,
     "platit": false,
-    "client": "EcoDistrib SA"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV004",
@@ -41,7 +41,7 @@
     "valoare_tva": 323,
     "valoare_totala": 2023,
     "platit": true,
-    "client": "IT Hardware SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV005",
@@ -52,7 +52,7 @@
     "valoare_tva": 1159,
     "valoare_totala": 7259,
     "platit": false,
-    "client": "Constructiva Build SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV006",
@@ -63,7 +63,7 @@
     "valoare_tva": 285,
     "valoare_totala": 1785,
     "platit": true,
-    "client": "Clean&Safe SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV007",
@@ -74,7 +74,7 @@
     "valoare_tva": 399,
     "valoare_totala": 2499,
     "platit": false,
-    "client": "Nordic Distribution SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV008",
@@ -85,7 +85,7 @@
     "valoare_tva": 570,
     "valoare_totala": 3570,
     "platit": false,
-    "client": "Global Print SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV009",
@@ -96,7 +96,7 @@
     "valoare_tva": 684,
     "valoare_totala": 4284,
     "platit": true,
-    "client": "Alpha Business SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV010",
@@ -107,7 +107,7 @@
     "valoare_tva": 1026,
     "valoare_totala": 6426,
     "platit": false,
-    "client": "NextGen Solutions SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV011",
@@ -118,7 +118,7 @@
     "valoare_tva": 760,
     "valoare_totala": 4760,
     "platit": false,
-    "client": "Digital Trade SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV012",
@@ -129,7 +129,7 @@
     "valoare_tva": 522,
     "valoare_totala": 3272,
     "platit": true,
-    "client": "Retail Point SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV013",
@@ -140,7 +140,7 @@
     "valoare_tva": 399,
     "valoare_totala": 2499,
     "platit": true,
-    "client": "AutoDepo SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV014",
@@ -151,7 +151,7 @@
     "valoare_tva": 352,
     "valoare_totala": 2202,
     "platit": false,
-    "client": "PromoWorld SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV015",
@@ -162,7 +162,7 @@
     "valoare_tva": 247,
     "valoare_totala": 1547,
     "platit": false,
-    "client": "Creative Agency SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV016",
@@ -173,7 +173,7 @@
     "valoare_tva": 1254,
     "valoare_totala": 7854,
     "platit": false,
-    "client": "Global Vision SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV017",
@@ -184,7 +184,7 @@
     "valoare_tva": 399,
     "valoare_totala": 2499,
     "platit": true,
-    "client": "TransPack SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV018",
@@ -195,7 +195,7 @@
     "valoare_tva": 570,
     "valoare_totala": 3570,
     "platit": false,
-    "client": "BigCity Media SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV019",
@@ -206,7 +206,7 @@
     "valoare_tva": 522,
     "valoare_totala": 3272,
     "platit": true,
-    "client": "Green Energy SRL"
+    "client": "Îcârcare...."
   },
   {
     "nr_factura": "INV020",
@@ -217,6 +217,6 @@
     "valoare_tva": 1102,
     "valoare_totala": 6902,
     "platit": false,
-    "client": "Softvision Tech SRL"
+    "client": "Îcârcare...."
   }
 ]
