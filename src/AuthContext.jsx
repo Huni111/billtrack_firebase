@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { account } from "./appwriteConfig";
-import { ID } from "appwrite";
+import { auth } from "../firebase.js";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const AuthContext = createContext();
 
@@ -9,36 +9,36 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
 
 
-useEffect(() => {
-        const checkSession = async () => {
-            try {
-                const session = await account.getSession("current");
+// useEffect(() => {
+//         const checkSession = async () => {
+//             try {
+//                 const session = await account.getSession("current");
 
-                if (session) {
-                    const userData = await account.get();
-                    setUser(userData);
-                }
-            } catch (error) {
-                // No active session or error
-                setUser(null);
-            } finally {
-                setLoading(false);
-            }
-        };
-        checkSession();
-    }, []);
+//                 if (session) {
+//                     const userData = await account.get();
+//                     setUser(userData);
+//                 }
+//             } catch (error) {
+//                 // No active session or error
+//                 setUser(null);
+//             } finally {
+//                 setLoading(false);
+//             }
+//         };
+//         checkSession();
+//     }, []);
 
     //logout inaktivitas utan
-     useEffect(() => {
-        if (!user) return;
+    //  useEffect(() => {
+    //     if (!user) return;
 
-        const timeout = setTimeout(() => {
-            logout();
-            console.log("User auto-logged out after 60 minutes");
-        }, 60 * 60 * 1000);
+    //     const timeout = setTimeout(() => {
+    //         logout();
+    //         console.log("User auto-logged out after 60 minutes");
+    //     }, 60 * 60 * 1000);
 
-        return () => clearTimeout(timeout);
-    }, [user]);
+    //     return () => clearTimeout(timeout);
+    // }, [user]);
 
 
     // Login function
@@ -58,23 +58,10 @@ useEffect(() => {
     // Register function
     const register = async (email, password) => {
 
-
-        try {
-        await account.deleteSession("current");
-    } catch (_) {
-        // It's ok if no session existed
-    }
-
-        await account.create(
-            ID.unique(), // Correct function call
-            email, // Use state values
-            password,
-
-        );
-         await account.createEmailPasswordSession(email, password);
-         const userData = await account.get();
-    setUser(userData);
-
+        await createUserWithEmailAndPassword(auth, email, password);
+       
+        setUser(userData)
+    
     };
 
     return (
