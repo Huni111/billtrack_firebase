@@ -10,7 +10,7 @@ export default function Nou() {
 
     const [userForm, setUserForm] = useState({ username: "", password: "", confirm: "" });
     const [userMsg, setUserMsg] = useState("");
-    const { register } = useAuth();
+    const { register, errror } = useAuth();
 
 
 
@@ -46,7 +46,7 @@ export default function Nou() {
             setUserMsg("Utilizator creat cu succes!");
             setUserForm({ username: "", password: "", confirm: "" });
         } catch (err) {
-            setUserMsg(err.message)
+            setUserMsg(errror == "Firebase: Error (auth/email-already-in-use)." ? "Utilizatorul există deja!" : errror)
         }
 
     };

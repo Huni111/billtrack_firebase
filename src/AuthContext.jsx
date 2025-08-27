@@ -1,32 +1,36 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { auth } from "../firebase.js";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [errror, setError] = useState(null);
 
 
-// useEffect(() => {
-//         const checkSession = async () => {
-//             try {
-//                 const session = await account.getSession("current");
+ useEffect(() => {
+    // This is the core Firebase authentication listener
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        
+        console.log(currentUser);
+        setUser(currentUser);
+      } else {
+        // No user is signed in.
+        setUser(null);
+      }
+      setLoading(false);
+    });
 
-//                 if (session) {
-//                     const userData = await account.get();
-//                     setUser(userData);
-//                 }
-//             } catch (error) {
-//                 // No active session or error
-//                 setUser(null);
-//             } finally {
-//                 setLoading(false);
-//             }
-//         };
-//         checkSession();
-//     }, []);
+    // Clean up the listener when the component unmounts
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
     //logout inaktivitas utan
     //  useEffect(() => {
@@ -44,28 +48,33 @@ export function AuthProvider({ children }) {
     // Login function
     const login = async (email, password) => {
     
-        await account.createEmailPasswordSession(email, password);
-        const userData = await account.get();
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const userData = userCredential.user
         setUser(userData);
+        console.log(userData);
     };
 
     // Logout function
     const logout = async () => {
-        await account.deleteSession("current");
+        await signOut(auth);
         setUser(null);
     };
 
     // Register function
     const register = async (email, password) => {
-
+        try{
         await createUserWithEmailAndPassword(auth, email, password);
-       
-        setUser(userData)
+        }catch(error){
+            console.log(error.message);
+            setError(error.message);
+            throw error;
+        }
+        
     
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, logout, register }}>
+        <AuthContext.Provider value={{ user, loading, login, logout, register, errror }}>
             {children}
         </AuthContext.Provider>
     );

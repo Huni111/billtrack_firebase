@@ -53,8 +53,10 @@ export default function Settings() {
         setUserForm(f => ({ ...f, [name]: value }));
     };
 
-    const handleLogout = async () => {
+    const handleLogout = async (e) => {
+        e.preventDefault();
         await logout();
+         setUserMsg("Ai dat logout!");
     };
 
     return (
