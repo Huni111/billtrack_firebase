@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { auth } from "../firebase.js";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut  } from "firebase/auth";
 
 const AuthContext = createContext();
 
@@ -33,16 +33,16 @@ export function AuthProvider({ children }) {
   }
 
     //logout inaktivitas utan
-    //  useEffect(() => {
-    //     if (!user) return;
+     useEffect(() => {
+        if (!user) return;
 
-    //     const timeout = setTimeout(() => {
-    //         logout();
-    //         console.log("User auto-logged out after 60 minutes");
-    //     }, 60 * 60 * 1000);
+        const timeout = setTimeout(() => {
+            logout();
+            console.log("User auto-logged out after 60 minutes");
+        }, 60 * 60 * 1000);
 
-    //     return () => clearTimeout(timeout);
-    // }, [user]);
+        return () => clearTimeout(timeout);
+    }, [user]);
 
 
     // Login function
