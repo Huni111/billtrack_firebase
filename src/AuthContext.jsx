@@ -28,20 +28,26 @@ export function AuthProvider({ children }) {
     return () => unsubscribe();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  
+
+   // Logout function
+    const logout = async () => {
+        await signOut(auth);
+        setUser(null);
+    };
+
 
     //logout inaktivitas utan
      useEffect(() => {
-        if (!user) return;
-
+        if (!user) {
+          return;
+        }
         const timeout = setTimeout(() => {
             logout();
             console.log("User auto-logged out after 60 minutes");
         }, 60 * 60 * 1000);
 
-        return () => clearTimeout(timeout);
+        return () => {clearTimeout(timeout)};
     }, [user]);
 
 
@@ -54,11 +60,7 @@ export function AuthProvider({ children }) {
         console.log(userData);
     };
 
-    // Logout function
-    const logout = async () => {
-        await signOut(auth);
-        setUser(null);
-    };
+   
 
     // Register function
     const register = async (email, password) => {
@@ -72,6 +74,10 @@ export function AuthProvider({ children }) {
         
     
     };
+
+    if (loading) {
+    return <div>Loading...</div>;
+  }
 
     return (
         <AuthContext.Provider value={{ user, loading, login, logout, register, errror }}>
