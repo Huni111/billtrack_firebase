@@ -28,7 +28,7 @@ export default function Bills() {
 
     const top10Clienti = Object.entries(
         iesireFacturi.reduce((acc, f) => {
-            acc[f.client] = (acc[f.client] || 0) + f.valoare_totala;
+           acc[f.client] = (acc[f.client] || 0) + Number(f.valoare_totala || 0);
             return acc;
         }, {})
     )
@@ -204,7 +204,7 @@ export default function Bills() {
                         <button className="modal-close" onClick={closeModal}>&times;</button>
                         <h3>Detalii Factură</h3>
                         <div><strong>{selectedBill.tip_factura === 'iesire' ? 'Client' : 'Furnizor'}:</strong> {selectedBill.client}</div>
-                        <div><strong>Valoare totală:</strong> {selectedBill.valoare_totala.toFixed(2)}</div>
+                        <div><strong>Valoare totală:</strong> {Number(selectedBill.valoare_totala || 0).toFixed(2)}</div>
                         <div><strong>Data emiterii:</strong> {selectedBill.data_emiteri}</div>
                         <div><strong>Data scadentă:</strong> {selectedBill.data_scadenta}</div>
                         <div><strong>Plătit:</strong> {selectedBill.platit ? 'Da' : 'Nu'}</div>
@@ -259,7 +259,7 @@ function PaginatedBillsTable({ bills, onBillClick, onEditClick, rowsPerPage }) {
                         <tr key={startIdx + idx} className="paginated-bill-row">
                             <td onClick={() => onBillClick(bill)} style={{ cursor: 'pointer' }}>{bill.tip_factura === 'iesire' ? 'Iesire' : 'Intrare'}</td>
                             <td onClick={() => onBillClick(bill)} style={{ cursor: 'pointer' }}>{bill.client}</td>
-                            <td onClick={() => onBillClick(bill)} style={{ cursor: 'pointer' }}>{bill.valoare_totala.toFixed(2)}</td>
+                            <td onClick={() => onBillClick(bill)} style={{ cursor: 'pointer' }}>{Number(bill.valoare_totala || 0).toFixed(2)}</td>
                             <td onClick={() => onBillClick(bill)} style={{ cursor: 'pointer' }}>{bill.data_scadenta}</td>
                             <td onClick={() => onBillClick(bill)} style={{ cursor: 'pointer' }}>{bill.platit ? 'Da' : 'Nu'}</td>
                             <td><button className="edit-bill-btn" onClick={e => { e.stopPropagation(); onEditClick(bill); }}>Editează</button></td>
