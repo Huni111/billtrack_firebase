@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,  useMemo } from "react";
 import "./Bills.css";
 import { dB } from "./appwriteConfig";
 import { ID } from "appwrite";
@@ -11,8 +11,8 @@ const DATABASE_ID = "685a8b6f000745b9ad99";
 
 
 export default function AddBillModal({ open, onClose }) {
-    const { addBill } = useBills();
-    const [companies, setCompanies] = useState([]);
+    const { bills, addBill } = useBills();
+  
     const [form, setForm] = useState({
         tip_factura: "",
         client: "",
@@ -24,25 +24,14 @@ export default function AddBillModal({ open, onClose }) {
         numar: ""
     });
 
-    useEffect(() => {
-        const fetchCompanies = async () => {
-            try {
-                const res = await dB.listDocuments(DATABASE_ID, COMPANIES_COLLECTION_ID, [Query.limit(5000)]);
-                const names = res.documents.map(doc => doc.client);
-
-                const uniqueNames = [...new Set(names)];
-
-                console.log(uniqueNames);
-
-                setCompanies(uniqueNames);
-
-            } catch (error) {
-                console.error("Error fetching companies:", error);
-            }
-        };
-
-        if (open) fetchCompanies();
-    }, [open]);
+     const companies = useMemo(() => {
+        const names = bills
+            .map(bill => bill.client.trim().toLowerCase())
+            .filter(name => name.length > 0);
+        const uniqueNames = [...new Set(names)];
+        // Optionally restore original casing by mapping to first matching bill client
+        return uniqueNames.map(name => bills.find(bill => bill.client.trim().toLowerCase() === name)?.client || name);
+    }, [bills]);
 
     if (!open) return null;
 

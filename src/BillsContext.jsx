@@ -97,10 +97,7 @@ export const BillsProvider = ({ children }) => {
             return updatedBills.sort((a, b) => new Date(b.data_emiteri) - new Date(a.data_emiteri));
         });
 
-        setBills(prevBills => {
-                const updatedBills = [formattedBill, ...prevBills];
-                return updatedBills.sort((a, b) => new Date(b.data_emiteri) - new Date(a.data_emiteri));
-            });
+       
     };
 
 

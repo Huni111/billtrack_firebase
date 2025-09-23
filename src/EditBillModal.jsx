@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./Bills.css";
+import { useBills } from "./BillsContext"; 
 
 export default function EditBillModal({ open, bill, onClose, onSave }) {
+
+    const { updateBill } = useBills();
+
     const [form, setForm] = useState({
         tip_factura: "iesire",
         client: "",
@@ -13,8 +17,7 @@ export default function EditBillModal({ open, bill, onClose, onSave }) {
         numar: ""
     });
 
-    const COMPANIES_COLLECTION_ID = import.meta.env.VITE_COMPANIES_COLLECTION_ID
-    const DATABASE_ID = import.meta.env.VITE_DATABASE_ID;
+
 
     useEffect(() => {
         if (bill) {

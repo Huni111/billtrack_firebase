@@ -5,8 +5,6 @@ import AddBillModal from './AddBillModal'
 import EditBillModal from './EditBillModal'
 import { useAuth } from "./AuthContext"
 import { useBills } from "./BillsContext"
-import { dB } from "./appwriteConfig";
-import { Query } from "appwrite";
 
 
 export default function Bills() {
@@ -18,8 +16,7 @@ export default function Bills() {
     const currentYear = today.getFullYear();
     const currentMonthStr = today.toISOString().slice(0, 7);
 
-    const COMPANIES_COLLECTION_ID = import.meta.env.VITE_COMPANIES_COLLECTION_ID
-    const DATABASE_ID = import.meta.env.VITE_DATABASE_ID;
+   
 
 
 
@@ -115,23 +112,7 @@ export default function Bills() {
 
       const handleEditSave = async (updatedBill) => {
     try {
-      await dB.updateDocument(
-        DATABASE_ID,
-        COMPANIES_COLLECTION_ID,
-        updatedBill.$id,
-        {
-          numar: updatedBill.numar,
-          tip_factura: updatedBill.tip_factura,
-          data_emiteri: updatedBill.data_emiteri,
-          data_scadenta: updatedBill.data_scadenta,
-          valoare_totala: updatedBill.valoare_totala,
-          platit: updatedBill.platit,
-          client: updatedBill.client,
-          serie: updatedBill.serie || ''
-        }
-      );
-
-      updateBill(updatedBill);
+     await updateBillInDB(updatedBill);
 
       setEditModalOpen(false);
       setEditBill(null);
