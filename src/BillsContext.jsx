@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 import { db } from "../firebase";
 import { collection, addDoc, getDocs, doc, setDoc, updateDoc, deleteDoc, query, orderBy, limit, where } from "firebase/firestore";
-
+import { useAuth } from "./AuthContext";
 
 const BillsContext = createContext();
 
@@ -19,9 +19,17 @@ export const useBills = () => {
 export const BillsProvider = ({ children }) => {
     const [bills, setBills] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { user } = useAuth();
 
 
     const COLLECTION_NAME = 'companies';
+
+    const ensureUserLoggedIn = () => {
+  if (!user) {
+    throw new Error("User must be logged in to perform this operation");
+  }
+  return user;
+};
 
     const formatDate = (dateString) => {
         if (!dateString) return '';
@@ -127,6 +135,7 @@ export const BillsProvider = ({ children }) => {
     const deleteBill = async (billId) => {
 
         try {
+            ensureUserLoggedIn();
             const billDocRef = doc(db, COLLECTION_NAME, billId);
             await deleteDoc(billDocRef);
             await fetchBills();
@@ -134,7 +143,6 @@ export const BillsProvider = ({ children }) => {
             console.error("Failed to delete bill:", error);
             throw error;
         }
-        setBills(prevBills => prevBills.filter(bill => bill.$id !== billId));
     };
 
     const value = {

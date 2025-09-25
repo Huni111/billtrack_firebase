@@ -240,6 +240,7 @@ function PaginatedBillsTable({ bills, onBillClick, onEditClick, rowsPerPage, onD
                         <th>Scadentă</th>
                         <th>Plătit</th>
                         <th>Editează</th>
+                        <th>Șterge</th>
                     </tr>
                 </thead>
                 <tbody>
