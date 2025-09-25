@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { dB } from "./appwriteConfig";
-import { Query } from "appwrite";
+
 
 import { db } from "../firebase";
 import { collection, addDoc, getDocs, doc, setDoc, updateDoc, deleteDoc, query, orderBy, limit, where } from "firebase/firestore";
@@ -72,7 +71,6 @@ export const BillsProvider = ({ children }) => {
 
         // Format the new bill to match our data structure
         const formattedData = {
-            $id: newBill.$id,
             tip_factura: newBill.tip_factura || "iesire",
             client: newBill.client || "",
             valoare_totala: newBill.valoare_totala || "",
@@ -104,11 +102,27 @@ export const BillsProvider = ({ children }) => {
 
 
 
-    const updateBill = (updatedBill) => {
-        setBills(prevBills =>
-            prevBills.map(bill => (bill.$id === updatedBill.$id ? updatedBill : bill))
-        );
-    };
+    const updateBill = async (updatedBill) => {
+  try {
+    const billDocRef = doc(db, COLLECTION_NAME, updatedBill.id);
+    await updateDoc(billDocRef, {
+      tip_factura: updatedBill.tip_factura,
+      client: updatedBill.client,
+      valoare_totala: updatedBill.valoare_totala,
+      data_emiteri: updatedBill.data_emiteri,
+      data_scadenta: updatedBill.data_scadenta,
+      platit: updatedBill.platit,
+      serie: updatedBill.serie,
+      numar: updatedBill.numar
+    });
+
+    await fetchBills();
+
+  } catch (error) {
+    console.error("Failed to update bill:", error);
+    throw error;
+  }
+};
 
     const deleteBill = (billId) => {
         setBills(prevBills => prevBills.filter(bill => bill.$id !== billId));

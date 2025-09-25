@@ -1,18 +1,14 @@
-import React, { useState, useEffect,  useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "./Bills.css";
-import { dB } from "./appwriteConfig";
-import { ID } from "appwrite";
-import { Query } from "appwrite";
 import { useBills } from "./BillsContext";
 
 
-const COMPANIES_COLLECTION_ID = "68650f37002e918f8716";
-const DATABASE_ID = "685a8b6f000745b9ad99";
+
 
 
 export default function AddBillModal({ open, onClose }) {
     const { bills, addBill } = useBills();
-  
+
     const [form, setForm] = useState({
         tip_factura: "",
         client: "",
@@ -24,7 +20,7 @@ export default function AddBillModal({ open, onClose }) {
         numar: ""
     });
 
-     const companies = useMemo(() => {
+    const companies = useMemo(() => {
         const names = bills
             .map(bill => bill.client.trim().toLowerCase())
             .filter(name => name.length > 0);
@@ -47,21 +43,15 @@ export default function AddBillModal({ open, onClose }) {
         e.preventDefault();
         if (!form.client || !form.valoare_totala || !form.data_emiteri || !form.data_scadenta) return;
 
-        const createdBill = await dB.createDocument(
-            DATABASE_ID,
-            COMPANIES_COLLECTION_ID,
-            ID.unique(),
-            {
-                ...form,
-                valoare_totala: parseFloat(form.valoare_totala),
-                numar: form.numar === "" ? null : parseInt(form.numar, 10),
-                platit: !!form.platit,
-                data_emiteri: form.data_emiteri, // Keep as YYYY-MM-DD format
-                data_scadenta: form.data_scadenta // Keep as YYYY-MM-DD format
-            }
-        );
+        await addBill({
+            ...form,
+            valoare_totala: parseFloat(form.valoare_totala),
+            numar: form.numar === "" ? null : parseInt(form.numar, 10),
+            platit: !!form.platit
+        });
 
-        addBill(createdBill)
+
+
 
         setForm({
             tip_factura: "iesire",

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Bills.css";
 import { useBills } from "./BillsContext"; 
 
-export default function EditBillModal({ open, bill, onClose, onSave }) {
+export default function EditBillModal({ open, bill, onClose }) {
 
     const { updateBill } = useBills();
 
@@ -56,7 +56,7 @@ export default function EditBillModal({ open, bill, onClose, onSave }) {
             return;
         }
 
-        onSave({
+        updateBill({
             ...bill,
             ...form,
             valoare_totala: parseFloat(form.valoare_totala),
