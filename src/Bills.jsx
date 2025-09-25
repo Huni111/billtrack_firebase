@@ -8,7 +8,7 @@ import { useBills } from "./BillsContext"
 
 
 export default function Bills() {
-    const { bills, addBill, updateBill } = useBills();
+    const { bills, addBill, deleteBill } = useBills();
     const [addModalOpen, setAddModalOpen] = React.useState(false);
     const { user } = useAuth()
 
@@ -110,6 +110,12 @@ export default function Bills() {
         setEditModalOpen(true);
     };
 
+    const handdleDelete = (bill) => {
+        deleteBill(bill.id);
+
+    }
+    
+
       const handleEditSave = async (updatedBill) => {
     try {
      await updateBillInDB(updatedBill);
@@ -202,6 +208,7 @@ export default function Bills() {
                     bills={bills}
                     onBillClick={handleBillClick}
                     onEditClick={handleEditClick}
+                    onDeleteClick={handdleDelete}
                     rowsPerPage={10}
                 />
             </div>
@@ -216,7 +223,7 @@ export default function Bills() {
 }
 
 // Paginated table component
-function PaginatedBillsTable({ bills, onBillClick, onEditClick, rowsPerPage }) {
+function PaginatedBillsTable({ bills, onBillClick, onEditClick, rowsPerPage, onDeleteClick }) {
     const [page, setPage] = React.useState(1);
     const totalPages = Math.ceil(bills.length / rowsPerPage);
     const startIdx = (page - 1) * rowsPerPage;
@@ -244,6 +251,7 @@ function PaginatedBillsTable({ bills, onBillClick, onEditClick, rowsPerPage }) {
                             <td onClick={() => onBillClick(bill)} style={{ cursor: 'pointer' }}>{bill.data_scadenta}</td>
                             <td onClick={() => onBillClick(bill)} style={{ cursor: 'pointer' }}>{bill.platit ? 'Da' : 'Nu'}</td>
                             <td><button className="edit-bill-btn" onClick={e => { e.stopPropagation(); onEditClick(bill); }}>Editează</button></td>
+                            <td><button className="edit-bill-btn" onClick={e => { e.stopPropagation(); onDeleteClick(bill); }}>🗑️</button></td>
                         </tr>
                     ))}
                 </tbody>
