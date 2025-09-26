@@ -19,6 +19,7 @@ export const useBills = () => {
 export const BillsProvider = ({ children }) => {
     const [bills, setBills] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const { user } = useAuth();
 
 
@@ -139,7 +140,9 @@ export const BillsProvider = ({ children }) => {
             const billDocRef = doc(db, COLLECTION_NAME, billId);
             await deleteDoc(billDocRef);
             await fetchBills();
+             setError(null)
         } catch (error) {
+            setError("Trebuie sa te logez pentru a sterge data!");
             console.error("Failed to delete bill:", error);
             throw error;
         }
@@ -151,7 +154,9 @@ export const BillsProvider = ({ children }) => {
         addBill,
         updateBill,
         deleteBill,
-        refetchBills: fetchBills
+        refetchBills: fetchBills,
+        error,
+        setError
     };
 
     return (

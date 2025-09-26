@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import facturiData from '../data.json'
 import './Bills.css'
 import AddBillModal from './AddBillModal'
 import EditBillModal from './EditBillModal'
 import { useAuth } from "./AuthContext"
 import { useBills } from "./BillsContext"
+import { useDeleteConfirmation, ConfirmDeleteModal } from './ConfirmDeleteModal';
+
 
 
 export default function Bills() {
@@ -16,7 +18,14 @@ export default function Bills() {
     const currentYear = today.getFullYear();
     const currentMonthStr = today.toISOString().slice(0, 7);
 
-   
+    const {
+        deleteModalOpen,
+        itemToDelete,
+        openDeleteModal,
+        confirmDelete,
+        cancelDelete,
+        error
+    } = useDeleteConfirmation(deleteBill);
 
 
 
@@ -25,7 +34,7 @@ export default function Bills() {
 
     const top10Clienti = Object.entries(
         iesireFacturi.reduce((acc, f) => {
-           acc[f.client] = (acc[f.client] || 0) + Number(f.valoare_totala || 0);
+            acc[f.client] = (acc[f.client] || 0) + Number(f.valoare_totala || 0);
             return acc;
         }, {})
     )
@@ -114,19 +123,19 @@ export default function Bills() {
         deleteBill(bill.id);
 
     }
-    
 
-      const handleEditSave = async (updatedBill) => {
-    try {
-     await updateBillInDB(updatedBill);
 
-      setEditModalOpen(false);
-      setEditBill(null);
-    } catch (error) {
-      console.error("Failed to update bill:", error);
-      // Optional: show UI error message here
-    }
-  };
+    const handleEditSave = async (updatedBill) => {
+        try {
+            await updateBillInDB(updatedBill);
+
+            setEditModalOpen(false);
+            setEditBill(null);
+        } catch (error) {
+            console.error("Failed to update bill:", error);
+            // Optional: show UI error message here
+        }
+    };
 
     return (
         <div className="main-content">
@@ -208,7 +217,7 @@ export default function Bills() {
                     bills={bills}
                     onBillClick={handleBillClick}
                     onEditClick={handleEditClick}
-                    onDeleteClick={handdleDelete}
+                    onDeleteClick={openDeleteModal}
                     rowsPerPage={10}
                 />
             </div>
@@ -217,6 +226,13 @@ export default function Bills() {
                 bill={editBill}
                 onClose={() => { setEditModalOpen(false); setEditBill(null); }}
                 onSave={handleEditSave}
+            />
+            <ConfirmDeleteModal
+                open={deleteModalOpen}
+                bill={itemToDelete}
+                onConfirm={confirmDelete}
+                onCancel={cancelDelete}
+                error={error}
             />
         </div>
     )
